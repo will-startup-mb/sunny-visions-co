@@ -27,31 +27,16 @@ export default async function Image() {
         {/* Logo */}
         <img
           src={logoSrc}
-          width={160}
-          height={160}
-          style={{ objectFit: 'contain', marginBottom: '36px' }}
+          width={200}
+          height={200}
+          style={{ objectFit: 'contain', marginBottom: '48px' }}
         />
-
-        {/* Site name */}
-        <div
-          style={{
-            color: 'white',
-            fontSize: 72,
-            fontWeight: 800,
-            letterSpacing: '-2px',
-            lineHeight: 1,
-            marginBottom: '20px',
-            display: 'flex',
-          }}
-        >
-          Startup MB
-        </div>
 
         {/* Tagline */}
         <div
           style={{
             color: '#3A9E9E',
-            fontSize: 30,
+            fontSize: 34,
             fontWeight: 600,
             textAlign: 'center',
             lineHeight: 1.3,
@@ -59,18 +44,6 @@ export default async function Image() {
           }}
         >
           Mapping the Myrtle Beach Startup Ecosystem
-        </div>
-
-        {/* URL */}
-        <div
-          style={{
-            color: 'rgba(255,255,255,0.35)',
-            fontSize: 22,
-            marginTop: '52px',
-            display: 'flex',
-          }}
-        >
-          startupmb.com
         </div>
       </div>
     ),
