@@ -67,3 +67,11 @@ export const researchHistory = pgTable('research_history', {
 });
 
 export type ResearchHistory = typeof researchHistory.$inferSelect;
+
+export const adminSettings = pgTable('admin_settings', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export type AdminSetting = typeof adminSettings.$inferSelect;

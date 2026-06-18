@@ -11,6 +11,7 @@ const navItems = [
   { href: '/admin/import', label: 'CSV Import', icon: '📥' },
   { href: '/admin/research-history', label: 'Research History', icon: '🔬' },
   { href: '/admin/stats', label: 'Stats', icon: '📊' },
+  { href: '/admin/security', label: 'Security', icon: '🔐' },
 ];
 
 export function AdminSidebar() {
