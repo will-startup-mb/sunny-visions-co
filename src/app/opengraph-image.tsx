@@ -22,6 +22,7 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           padding: '80px',
+          position: 'relative',
         }}
       >
         {/* Logo */}
@@ -44,6 +45,21 @@ export default async function Image() {
           }}
         >
           Mapping the Myrtle Beach Startup Ecosystem
+        </div>
+
+        {/* CTA */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '52px',
+            right: '72px',
+            color: 'rgba(255,255,255,0.55)',
+            fontSize: 24,
+            fontWeight: 500,
+            display: 'flex',
+          }}
+        >
+          Explore the Directory →
         </div>
       </div>
     ),

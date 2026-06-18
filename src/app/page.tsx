@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: { absolute: 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem' },
-  description: 'Discover the companies, founders, and innovators building the future in the Grand Strand. The definitive Myrtle Beach startup directory.',
+  description: 'Discover and explore startups, founders, and companies building in the Myrtle Beach, SC ecosystem.',
 };
 
 interface SearchParams {

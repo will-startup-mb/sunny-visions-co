@@ -5,7 +5,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 const SITE_URL = process.env.NEXTAUTH_URL || 'https://startupmb.vercel.app';
-const DESCRIPTION = 'Discover the companies, founders, and innovators building the future in the Grand Strand. The definitive Myrtle Beach startup directory.';
+const DESCRIPTION = 'Discover and explore startups, founders, and companies building in the Myrtle Beach, SC ecosystem.';
 
 export const metadata: Metadata = {
   title: {
