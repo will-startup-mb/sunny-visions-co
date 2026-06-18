@@ -1,65 +1,171 @@
-import Image from "next/image";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
+import { db } from '@/lib/db';
+import { companies } from '@/lib/db/schema';
+import { eq, ilike, or, and, asc, desc, sql } from 'drizzle-orm';
+import { CompanyCard } from '@/components/CompanyCard';
+import { SuggestCompanyForm } from '@/components/SuggestCompanyForm';
+import { PublicFooter } from '@/components/PublicFooter';
+import { SortSelect } from '@/components/SortSelect';
+import { INDUSTRIES, STAGES, FUNDING_OPTIONS } from '@/lib/constants';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: { absolute: 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem' },
+  description: 'Discover the companies, founders, and innovators building the future in the Grand Strand. The definitive Myrtle Beach startup directory.',
+};
+
+interface SearchParams {
+  search?: string;
+  industry?: string;
+  stage?: string;
+  funding?: string;
+  sort?: string;
+}
+
+async function getCompanies(params: SearchParams) {
+  const conditions: ReturnType<typeof eq>[] = [eq(companies.is_published, true)];
+
+  if (params.search) {
+    conditions.push(
+      or(
+        ilike(companies.company_name, `%${params.search}%`),
+        ilike(companies.company_description, `%${params.search}%`),
+        ilike(companies.founder_names, `%${params.search}%`)
+      ) as ReturnType<typeof eq>
+    );
+  }
+  if (params.industry) conditions.push(eq(companies.primary_industry, params.industry) as ReturnType<typeof eq>);
+  if (params.stage) conditions.push(eq(companies.stage, params.stage) as ReturnType<typeof eq>);
+  if (params.funding) conditions.push(eq(companies.funding_raised, params.funding) as ReturnType<typeof eq>);
+
+  const orderBy = params.sort === 'za'
+    ? desc(sql`LOWER(${companies.company_name})`)
+    : params.sort === 'newest'
+    ? desc(companies.created_at)
+    : asc(sql`LOWER(${companies.company_name})`);
+
+  return db.select().from(companies).where(and(...conditions)).orderBy(orderBy);
+}
+
+export default async function PublicDirectory({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const params = await searchParams;
+  const results = await getCompanies(params);
+  const hasFilters = params.search || params.industry || params.stage || params.funding;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F4F8FB' }}>
+      {/* Hero — logo, nav, and headline as one unified section */}
+      <section style={{ backgroundColor: '#1B3A52' }} className="pb-14">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          {/* Nav row */}
+          <div className="flex items-center justify-between pt-4 pb-2">
+            <Link href="/">
+              <Image src="/logo-white.png" alt="Startup MB" height={80} width={80} className="object-contain" />
+            </Link>
+            <nav className="flex items-center gap-3 sm:gap-6">
+              <Link
+                href="/about"
+                className="text-white/70 hover:text-white text-sm sm:text-base transition-colors font-medium"
+              >
+                About
+              </Link>
+              <Link
+                href="/admin"
+                className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded font-semibold text-white/50 hover:text-white transition-colors"
+              >
+                Admin
+              </Link>
+            </nav>
+          </div>
+          {/* Headline */}
+          <div className="max-w-4xl mx-auto text-center pt-6">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+              Mapping the Myrtle Beach<br />
+              <span style={{ color: '#3A9E9E' }}>Startup Ecosystem</span>
+            </h1>
+            <p className="text-white/70 mb-8 text-base sm:text-lg mx-auto leading-relaxed sm:whitespace-nowrap">
+              Discover the companies, founders, and innovators building the future in the Grand Strand.
+            </p>
+            <form method="GET" className="flex gap-2 max-w-xl mx-auto">
+              <input
+                name="search"
+                defaultValue={params.search}
+                placeholder="Search companies, founders, industries…"
+                className="flex-1 rounded-lg px-4 sm:px-5 py-3 text-sm"
+                style={{ border: 'none', backgroundColor: 'white' }}
+              />
+              {params.industry && <input type="hidden" name="industry" value={params.industry} />}
+              {params.stage && <input type="hidden" name="stage" value={params.stage} />}
+              {params.funding && <input type="hidden" name="funding" value={params.funding} />}
+              {params.sort && <input type="hidden" name="sort" value={params.sort} />}
+              <button type="submit" className="btn-primary">Search</button>
+            </form>
+            <SuggestCompanyForm />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Filters */}
+      <div className="border-b border-gray-200 bg-white shadow-sm sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <form method="GET" className="flex flex-wrap gap-3 sm:gap-4 py-4 items-center">
+            {params.search && <input type="hidden" name="search" value={params.search} />}
+            {params.sort && <input type="hidden" name="sort" value={params.sort} />}
+            <select name="industry" defaultValue={params.industry || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+              <option value="">All Industries</option>
+              {INDUSTRIES.map((i) => <option key={i} value={i}>{i}</option>)}
+            </select>
+            <select name="stage" defaultValue={params.stage || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+              <option value="">All Stages</option>
+              {STAGES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+            <select name="funding" defaultValue={params.funding || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+              <option value="">All Funding</option>
+              {FUNDING_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+            </select>
+            <button type="submit" className="btn-ghost py-2">Filter</button>
+            {hasFilters && (
+              <Link href="/" className="text-sm underline" style={{ color: '#F26522' }}>Clear all</Link>
+            )}
+            <div className="ml-auto flex items-center gap-3">
+              <SortSelect
+                currentSort={params.sort || 'az'}
+                otherParams={{ search: params.search, industry: params.industry, stage: params.stage, funding: params.funding }}
+              />
+              <span className="text-sm font-medium text-gray-500">
+                {results.length} {results.length === 1 ? 'company' : 'companies'}
+              </span>
+            </div>
+          </form>
         </div>
+      </div>
+
+      {/* Grid */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-6 sm:px-8 lg:px-12 py-10">
+        {results.length === 0 ? (
+          <div className="text-center py-16 text-gray-500">
+            <p className="text-5xl mb-6">🔍</p>
+            <p className="text-xl font-medium">No companies found</p>
+            <p className="mt-2">Try adjusting your search or filters.</p>
+            <Link href="/" className="btn-primary mt-8 inline-flex">Clear filters</Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {results.map((company) => (
+              <CompanyCard key={company.id} company={company} />
+            ))}
+          </div>
+        )}
       </main>
+
+      <PublicFooter />
     </div>
   );
 }

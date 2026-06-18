@@ -1,0 +1,100 @@
+export const INDUSTRIES = [
+  'AI / Automation',
+  'Software / SaaS',
+  'FinTech',
+  'HealthTech',
+  'MedTech',
+  'BioTech',
+  'GovTech / Civic Tech',
+  'CleanTech',
+  'Hardware / IoT',
+  'Consumer Apps',
+  'E-Commerce',
+  'Media / Creative',
+  'Entertainment Tech',
+  'IT Services',
+  'Professional Services',
+  'Nonprofit / Ecosystem',
+  'LegalTech',
+  'Real Estate Tech',
+  'EdTech',
+  'Sports Tech',
+  'AgTech',
+  'Travel Tech',
+  'Hospitality / Tourism Tech',
+  'Cybersecurity',
+  'Robotics',
+  'Manufacturing',
+  'Marketing Tech',
+  'Golf Tech',
+  'Data / Analytics',
+  'Marine Tech',
+  'Tourism Tech',
+  'Telecom / Infrastructure',
+  'Security',
+  'HRTech / Workforce Tech',
+  'Construction Tech',
+  'Food & Beverage Tech',
+  'Logistics / Supply Chain',
+  'Retail Tech',
+  'Insurance Tech (InsurTech)',
+  'Automotive Tech',
+  'Defense Tech',
+  'Web3 / Blockchain',
+  'Other',
+] as const;
+
+export const STAGES = [
+  'Idea',
+  'Startup',
+  'Early Growth',
+  'Growth',
+  'Mature',
+  'Enterprise',
+  'Unknown',
+] as const;
+
+export const EMPLOYEE_RANGES = [
+  '1',
+  '2-5',
+  '6-10',
+  '11-25',
+  '26-50',
+  '51-100',
+  '101-250',
+  '251-500',
+  '500+',
+  'Unknown',
+] as const;
+
+export const FUNDING_OPTIONS = [
+  'Bootstrapped',
+  'Angel',
+  'Seed',
+  'Venture Backed',
+  'Private Equity',
+  'Grant Funding',
+  'Unknown',
+] as const;
+
+export const INTERVIEW_PRIORITIES = ['High', 'Medium', 'Low'] as const;
+
+export const FOUNDER_STATUSES = [
+  'Not Contacted',
+  'Contacted',
+  'Scheduled',
+  'Interviewed',
+  'Repeat Guest',
+  'Advisor',
+  'Sponsor',
+  'Investor',
+  'Do Not Contact',
+] as const;
+
+export const BRAND = {
+  navy: '#1B3A52',
+  teal: '#3A9E9E',
+  orange: '#F26522',
+  lightBg: '#F4F8FB',
+  white: '#FFFFFF',
+} as const;
