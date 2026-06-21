@@ -86,19 +86,44 @@ export default async function EcosystemSnapshotPage() {
       {/* Print styles */}
       <style>{`
         @page {
-          margin: 0;
+          margin: 14mm 14mm 16mm 14mm;
+          size: A4 portrait;
         }
         @media print {
-          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          /* Colour accuracy */
+          html, body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+          /* ── The key fix ──────────────────────────────────────────────────
+             AdminShell wraps everything in:
+               div.flex.h-screen.overflow-hidden          ← clips to viewport
+                 div.flex-col.flex-1.overflow-hidden      ← same
+                   main.flex-1.overflow-y-auto            ← scroll instead of grow
+             Override all three so the full document height flows to the printer.
+          ─────────────────────────────────────────────────────────────────── */
+          html, body { height: auto !important; overflow: visible !important; }
+          .h-screen  { height: auto !important; }
+          .overflow-hidden { overflow: visible !important; }
+          .overflow-y-auto { overflow: visible !important; height: auto !important; }
+
+          /* Hide sidebar */
+          aside { display: none !important; }
+
+          /* Prevent table rows from splitting across pages */
+          tr { break-inside: avoid; page-break-inside: avoid; }
+
+          /* Let the report card fill the page naturally */
+          .report-card { max-width: 100% !important; padding: 0 !important; }
         }
       `}</style>
 
       <div
-        className="min-h-full p-6 md:p-10 print:p-8"
+        className="min-h-full p-6 md:p-10 print:p-0"
         style={{ backgroundColor: '#F4F8FB' }}
       >
         {/* Report container — white on print */}
-        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-10 print:shadow-none print:border-0 print:rounded-none print:p-0">
+        <div className="report-card max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-10 print:shadow-none print:border-0 print:rounded-none print:p-0">
 
           {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-8 print:mb-6">
@@ -119,7 +144,7 @@ export default async function EcosystemSnapshotPage() {
           <div className="h-px bg-gray-100 mb-8 print:mb-6" />
 
           {/* KPI row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 print:mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 print:mb-8 print:break-inside-avoid">
             {[
               { label: 'Published Companies', value: total, accent: '#1B3A52' },
               { label: 'Industries Represented', value: byIndustry.length, accent: '#3A9E9E' },
@@ -201,7 +226,7 @@ export default async function EcosystemSnapshotPage() {
           )}
 
           {/* Footer */}
-          <div className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-between">
+          <div className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-between print:break-inside-avoid">
             <p className="text-xs text-gray-400">
               Data sourced from the Startup MB directory · startupmb.com
             </p>
