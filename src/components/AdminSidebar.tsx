@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 
 const navItems = [
   { href: '/mb-hub/companies', label: 'Companies' },
+  { href: '/mb-hub/blog', label: 'Blog' },
   { href: '/mb-hub/batch-research', label: 'Batch Research' },
   { href: '/mb-hub/suggestions', label: 'Suggestions' },
   { href: '/mb-hub/research-history', label: 'Research History' },

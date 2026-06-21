@@ -93,6 +93,20 @@ export const batchJobs = pgTable('batch_jobs', {
 
 export type BatchJob = typeof batchJobs.$inferSelect;
 
+export const posts = pgTable('posts', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: text('title').notNull(),
+  slug: text('slug').notNull().unique(),
+  content: text('content').notNull().default(''),
+  excerpt: text('excerpt'),
+  published: boolean('published').notNull().default(false),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export type Post = typeof posts.$inferSelect;
+export type NewPost = typeof posts.$inferInsert;
+
 export const adminSettings = pgTable('admin_settings', {
   key: text('key').primaryKey(),
   value: text('value').notNull(),
