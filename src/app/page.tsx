@@ -10,6 +10,7 @@ import { PublicFooter } from '@/components/PublicFooter';
 import { SortSelect } from '@/components/SortSelect';
 import { INDUSTRIES, STAGES, FUNDING_OPTIONS } from '@/lib/constants';
 import { PublicNav } from '@/components/PublicNav';
+import { getSiteContent } from '@/lib/db/site-content';
 
 export const dynamic = 'force-dynamic';
 
@@ -57,7 +58,10 @@ export default async function PublicDirectory({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const results = await getCompanies(params);
+  const [results, siteContent] = await Promise.all([
+    getCompanies(params),
+    getSiteContent(),
+  ]);
   const hasFilters = params.search || params.industry || params.stage || params.funding;
 
   return (
@@ -75,11 +79,10 @@ export default async function PublicDirectory({
           {/* Headline */}
           <div className="max-w-4xl mx-auto text-center pt-6">
             <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4" style={{ color: '#1B3A52' }}>
-              Mapping the Myrtle Beach<br />
-              <span style={{ color: '#3A9E9E' }}>Startup Ecosystem</span>
+              {siteContent.hero_headline}
             </h1>
-            <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed sm:whitespace-nowrap" style={{ color: '#4B5563' }}>
-              Discover the companies, founders, and innovators building the future in the Grand Strand.
+            <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed" style={{ color: '#4B5563' }}>
+              {siteContent.hero_subheadline}
             </p>
             <form method="GET" className="flex gap-2 max-w-xl mx-auto">
               <input

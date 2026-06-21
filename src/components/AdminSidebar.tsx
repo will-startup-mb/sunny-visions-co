@@ -16,6 +16,7 @@ const navItems = [
   { href: '/mb-hub/reports', label: 'Reports' },
   { href: '/mb-hub/stats', label: 'Statistics' },
   { href: '/mb-hub/security', label: 'Security' },
+  { href: '/mb-hub/site-content', label: 'Site Content' },
 ];
 
 interface Props {

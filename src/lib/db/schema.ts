@@ -114,3 +114,11 @@ export const adminSettings = pgTable('admin_settings', {
 });
 
 export type AdminSetting = typeof adminSettings.$inferSelect;
+
+export const siteContent = pgTable('site_content', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(),
+  updated_at: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export type SiteContent = typeof siteContent.$inferSelect;

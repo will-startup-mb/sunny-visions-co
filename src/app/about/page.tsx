@@ -3,13 +3,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PublicFooter } from '@/components/PublicFooter';
 import { PublicNav } from '@/components/PublicNav';
+import { getSiteContent } from '@/lib/db/site-content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'About',
   description: 'Learn about Startup MB — the podcast and directory mapping the Myrtle Beach startup ecosystem.',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const siteContent = await getSiteContent();
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
       <header style={{ backgroundColor: '#F8F9FA' }}>
@@ -27,7 +31,7 @@ export default function AboutPage() {
         <h1 className="text-4xl font-extrabold mb-6" style={{ color: '#1B3A52' }}>About Startup MB</h1>
 
         <p className="text-gray-600 text-lg leading-relaxed mb-4">
-          Startup MB is a podcast and ecosystem mapping platform dedicated to discovering, documenting, and celebrating the startups and innovators building companies in the Myrtle Beach, SC area.
+          {siteContent.about_intro}
         </p>
         <p className="text-gray-600 text-lg leading-relaxed mb-12">
           Founded by Will McCaffrey, Startup MB started as a simple question: <em>who&apos;s actually building things here?</em> What began as a Google Sheet has grown into a live, searchable directory of local startups, researched, categorized, and updated regularly.
