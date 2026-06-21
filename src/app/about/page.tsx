@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PublicFooter } from '@/components/PublicFooter';
+import { PublicNav } from '@/components/PublicNav';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -17,11 +18,7 @@ export default function AboutPage() {
             <Link href="/">
               <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
-            <nav className="flex items-center gap-3 sm:gap-6">
-              <Link href="/podcast" className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900">Podcast</Link>
-              <Link href="/blog" className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900">Blog</Link>
-              <Link href="/about" className="text-sm sm:text-base transition-colors font-medium text-gray-900">About</Link>
-            </nav>
+            <PublicNav />
           </div>
         </div>
       </header>

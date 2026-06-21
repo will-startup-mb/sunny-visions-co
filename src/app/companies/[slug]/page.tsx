@@ -7,6 +7,7 @@ import { companies } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { CorrectionForm } from '@/components/CorrectionForm';
 import { PublicFooter } from '@/components/PublicFooter';
+import { PublicNav } from '@/components/PublicNav';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,14 +44,7 @@ export default async function CompanyDetail({ params }: { params: Promise<{ slug
             <Link href="/">
               <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
-            <nav className="flex items-center gap-3 sm:gap-6">
-              <Link
-                href="/about"
-                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
-              >
-                About
-              </Link>
-            </nav>
+            <PublicNav />
           </div>
         </div>
       </header>

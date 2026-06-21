@@ -5,6 +5,7 @@ import { db } from '@/lib/db';
 import { posts } from '@/lib/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { PublicFooter } from '@/components/PublicFooter';
+import { PublicNav } from '@/components/PublicNav';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,11 +29,7 @@ export default async function BlogPage() {
             <Link href="/">
               <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
-            <nav className="flex items-center gap-3 sm:gap-6">
-              <Link href="/podcast" className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900">Podcast</Link>
-              <Link href="/about" className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900">About</Link>
-              <Link href="/blog" className="text-sm sm:text-base transition-colors font-medium text-gray-900">Blog</Link>
-            </nav>
+            <PublicNav />
           </div>
         </div>
       </header>

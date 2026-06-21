@@ -9,6 +9,7 @@ import { SuggestCompanyForm } from '@/components/SuggestCompanyForm';
 import { PublicFooter } from '@/components/PublicFooter';
 import { SortSelect } from '@/components/SortSelect';
 import { INDUSTRIES, STAGES, FUNDING_OPTIONS } from '@/lib/constants';
+import { PublicNav } from '@/components/PublicNav';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,26 +70,7 @@ export default async function PublicDirectory({
             <Link href="/">
               <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
-            <nav className="flex items-center gap-3 sm:gap-6">
-              <Link
-                href="/podcast"
-                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
-              >
-                Podcast
-              </Link>
-              <Link
-                href="/blog"
-                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
-              >
-                Blog
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
-              >
-                About
-              </Link>
-            </nav>
+            <PublicNav />
           </div>
           {/* Headline */}
           <div className="max-w-4xl mx-auto text-center pt-6">
