@@ -77,7 +77,12 @@ export default async function PublicDirectory({
           </div>
           <div className="max-w-4xl mx-auto text-center pt-6">
             <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4" style={{ color: '#1B3A52' }}>
-              {content.hero_headline}
+              {(() => {
+                const [line1, ...rest] = content.hero_headline.split('\n');
+                return rest.length > 0 ? (
+                  <>{line1}<br /><span style={{ color: '#3A9E9E' }}>{rest.join('\n')}</span></>
+                ) : line1;
+              })()}
             </h1>
             <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed" style={{ color: '#4B5563' }}>
               {content.hero_subheadline}
