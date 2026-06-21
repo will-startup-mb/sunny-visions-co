@@ -39,7 +39,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* Mobile top bar */}
         <header
-          className="lg:hidden flex items-center gap-3 h-14 px-4 border-b flex-shrink-0 bg-white"
+          className="lg:hidden print:hidden flex items-center gap-3 h-14 px-4 border-b flex-shrink-0 bg-white"
           style={{ borderColor: '#dde8f0' }}
         >
           <button

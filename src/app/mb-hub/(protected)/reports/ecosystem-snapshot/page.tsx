@@ -21,7 +21,7 @@ function BarRow({ label, count, max, total, color }: { label: string; count: num
   const barWidth = Math.round((count / max) * 100);
   return (
     <div className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">
-      <span className="text-sm text-gray-700 w-40 flex-shrink-0 truncate" title={label}>{label}</span>
+      <span className="text-sm text-gray-700 w-48 flex-shrink-0 leading-snug">{label}</span>
       <div className="flex-1 h-2 rounded-full" style={{ backgroundColor: '#EEF2F6' }}>
         <div
           className="h-2 rounded-full transition-all"
@@ -85,9 +85,11 @@ export default async function EcosystemSnapshotPage() {
     <>
       {/* Print styles */}
       <style>{`
+        @page {
+          margin: 0;
+        }
         @media print {
           body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-          .admin-shell-hide { display: none !important; }
         }
       `}</style>
 
