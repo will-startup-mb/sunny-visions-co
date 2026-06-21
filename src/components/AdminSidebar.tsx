@@ -4,27 +4,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-
-const navItems = [
-  { href: '/mb-hub/companies', label: 'Companies' },
-  { href: '/mb-hub/blog', label: 'Blog' },
-  { href: '/mb-hub/batch-research', label: 'Batch Research' },
-  { href: '/mb-hub/suggestions', label: 'Suggestions' },
-  { href: '/mb-hub/research-history', label: 'Research History' },
-  { href: '/mb-hub/cost-dashboard', label: 'Cost Dashboard' },
-  { href: '/mb-hub/industries', label: 'Industries' },
-  { href: '/mb-hub/reports', label: 'Reports' },
-  { href: '/mb-hub/stats', label: 'Statistics' },
-  { href: '/mb-hub/security', label: 'Security' },
-  { href: '/mb-hub/site-content', label: 'Site Content' },
-];
+import { applyNavOrder } from '@/lib/nav-items';
 
 interface Props {
   onClose?: () => void;
+  navOrder: string[];
 }
 
-export function AdminSidebar({ onClose }: Props) {
+export function AdminSidebar({ onClose, navOrder }: Props) {
   const pathname = usePathname();
+  const items = applyNavOrder(navOrder);
 
   return (
     <aside
@@ -51,7 +40,7 @@ export function AdminSidebar({ onClose }: Props) {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-        {navItems.map((item) => {
+        {items.map((item) => {
           const active = pathname.startsWith(item.href);
           return (
             <Link

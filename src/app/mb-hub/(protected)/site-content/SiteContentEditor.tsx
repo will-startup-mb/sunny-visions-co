@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { SITE_CONTENT_DEFAULTS } from '@/lib/db/site-content';
 
 type Key = keyof typeof SITE_CONTENT_DEFAULTS;
@@ -130,9 +130,10 @@ const inputStyle = {
 
 interface Props {
   initial: Record<string, string>;
+  navOrderEditor?: ReactNode;
 }
 
-export function SiteContentEditor({ initial }: Props) {
+export function SiteContentEditor({ initial, navOrderEditor }: Props) {
   const [values, setValues] = useState<Record<string, string>>(initial);
   const [saving, setSaving] = useState<Record<string, boolean>>({});
   const [saved, setSaved] = useState<Record<string, boolean>>({});
@@ -173,6 +174,8 @@ export function SiteContentEditor({ initial }: Props) {
       </p>
 
       <div className="space-y-12">
+        {navOrderEditor && <div>{navOrderEditor}</div>}
+
         {SECTIONS.map(({ title, accent, fields }) => (
           <div key={title}>
             <div className="flex items-center gap-3 mb-5">

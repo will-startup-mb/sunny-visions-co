@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
 import { AdminShell } from '@/components/AdminShell';
 import { SessionProvider } from './SessionProvider';
+import { getNavOrder } from '@/lib/db/nav-order';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -11,9 +12,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     redirect('/mb-hub/login');
   }
 
+  const navOrder = await getNavOrder();
+
   return (
     <SessionProvider session={session}>
-      <AdminShell>
+      <AdminShell navOrder={navOrder}>
         {children}
       </AdminShell>
     </SessionProvider>

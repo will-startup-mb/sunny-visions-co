@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AdminSidebar } from './AdminSidebar';
 
-export function AdminShell({ children }: { children: React.ReactNode }) {
+export function AdminShell({ children, navOrder }: { children: React.ReactNode; navOrder: string[] }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <AdminSidebar onClose={() => setOpen(false)} />
+        <AdminSidebar onClose={() => setOpen(false)} navOrder={navOrder} />
       </div>
 
       {/* Main area */}
