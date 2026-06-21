@@ -10,8 +10,12 @@ export const SITE_CONTENT_DEFAULTS: Record<string, string> = {
 };
 
 export const getSiteContent = cache(async (): Promise<Record<string, string>> => {
-  const rows = await db.select().from(siteContent);
-  const data: Record<string, string> = { ...SITE_CONTENT_DEFAULTS };
-  for (const row of rows) data[row.key] = row.value;
-  return data;
+  try {
+    const rows = await db.select().from(siteContent);
+    const data: Record<string, string> = { ...SITE_CONTENT_DEFAULTS };
+    for (const row of rows) data[row.key] = row.value;
+    return data;
+  } catch {
+    return { ...SITE_CONTENT_DEFAULTS };
+  }
 });
