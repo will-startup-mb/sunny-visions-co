@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import path from 'path';
+import { put, del } from '@vercel/blob';
 import { db } from '@/lib/db';
 import { companies } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -15,17 +14,30 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const file = formData.get('logo') as File | null;
   if (!file) return NextResponse.json({ error: 'No file provided' }, { status: 400 });
 
+  // Delete previous upload from Blob storage if present
+  if (company.logo_upload_url?.includes('blob.vercel-storage.com')) {
+    await del(company.logo_upload_url).catch(() => {});
+  }
+
   const ext = file.name.split('.').pop()?.toLowerCase() || 'png';
-  const filename = `${id}.${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
+  const { url } = await put(`logos/${id}.${ext}`, file, { access: 'public', addRandomSuffix: false });
 
-  await writeFile(
-    path.join(process.cwd(), 'public', 'logos', filename),
-    buffer
-  );
+  await db.update(companies).set({ logo_upload_url: url, updated_at: new Date() }).where(eq(companies.id, id));
 
-  const logo_url = `/logos/${filename}`;
-  await db.update(companies).set({ logo_url, updated_at: new Date() }).where(eq(companies.id, id));
+  return NextResponse.json({ logo_url: url });
+}
 
-  return NextResponse.json({ logo_url });
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  const [company] = await db.select().from(companies).where(eq(companies.id, id));
+  if (!company) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+
+  if (company.logo_upload_url?.includes('blob.vercel-storage.com')) {
+    await del(company.logo_upload_url).catch(() => {});
+  }
+
+  await db.update(companies).set({ logo_upload_url: null, updated_at: new Date() }).where(eq(companies.id, id));
+
+  return NextResponse.json({ ok: true });
 }

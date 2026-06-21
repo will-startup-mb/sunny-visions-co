@@ -1,5 +1,39 @@
-export const RESEARCH_SYSTEM_PROMPT = `You are a startup ecosystem researcher for Startup MB, a podcast mapping the Myrtle Beach, SC startup community. Given a company name and website, research the company thoroughly and return a JSON object with the following fields:
+export const RESEARCHABLE_FIELDS = [
+  'company_description',
+  'founder_names',
+  'founder_overview',
+  'founder_linkedin_url',
+  'company_linkedin_url',
+  'city_region',
+  'primary_industry',
+  'secondary_industry',
+  'stage',
+  'estimated_employees',
+  'funding_raised',
+  'has_about_page',
+  'has_team_page',
+  'social_media_active',
+  'press_coverage',
+  'innovation_score',
+  'opportunity_score',
+  'interview_priority',
+  'contact_name',
+  'contact_email',
+  'outreach_linkedin_draft',
+  'research_notes',
+] as const;
 
+export type ResearchableField = typeof RESEARCHABLE_FIELDS[number];
+
+export const RESEARCH_SYSTEM_PROMPT = `You are a startup ecosystem researcher for Startup MB, a podcast mapping the Myrtle Beach, SC startup community. Given a company name and website, research the company and return a JSON object.
+
+SEARCH DISCIPLINE — follow these rules strictly:
+- Perform at most 5 web searches, one at a time, never in parallel.
+- After each search, check if you have found enough information to populate all fields.
+- Stop searching as soon as you have gathered all discoverable information — do not continue searching if you already have what you need.
+- If a field cannot be determined after reasonable searching, set it to null and move on. Do not keep searching for unfindable data.
+
+Required fields:
 - company_description: 2 sentences, factual summary for a public directory
 - founder_names: comma-separated if multiple
 - founder_overview: 2-3 sentences on founder background and why they started this company
@@ -22,8 +56,16 @@ export const RESEARCH_SYSTEM_PROMPT = `You are a startup ecosystem researcher fo
 - contact_email: email if publicly discoverable, otherwise null
 - outreach_linkedin_draft: a LinkedIn connection request message, max 200 characters, written from Will McCaffrey, Host of Startup MB podcast — warm, specific, not generic
 - research_notes: detailed raw findings — everything you found, including sources, quotes, and data points
+- field_confidence: an object mapping EVERY field name above to one of: "high" (found direct evidence), "medium" (inferred from secondary sources), or "low" (guessed or uncertain). Every field must have a confidence entry.
 
-Return ONLY valid JSON, no markdown fences, no preamble, no explanation. If a field cannot be determined, use null.`;
+Return ONLY valid JSON, no markdown fences, no preamble, no explanation. Set null for any field that cannot be determined.`;
 
 export const RESEARCH_USER_PROMPT = (companyName: string, website: string) =>
   `Research this company for the Startup MB ecosystem database:\n\nCompany Name: ${companyName}\nWebsite: ${website || 'Not provided — search for it'}\n\nReturn the full JSON object as specified.`;
+
+export const RESEARCH_RERESEARCH_PROMPT = (
+  companyName: string,
+  website: string,
+  staleFields: string[]
+) =>
+  `Re-research this company, focusing ONLY on these specific fields that are stale or missing:\n\n${staleFields.join(', ')}\n\nCompany Name: ${companyName}\nWebsite: ${website || 'Not provided — search for it'}\n\nReturn a JSON object containing ONLY the requested stale fields plus a field_confidence object covering those same fields. Omit any field not in the list above.`;

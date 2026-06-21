@@ -60,37 +60,31 @@ export default async function PublicDirectory({
   const hasFilters = params.search || params.industry || params.stage || params.funding;
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F4F8FB' }}>
-      {/* Hero — logo, nav, and headline as one unified section */}
-      <section style={{ backgroundColor: '#1B3A52' }} className="pb-14">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
+      {/* Hero */}
+      <section style={{ backgroundColor: '#F8F9FA' }} className="pb-14">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           {/* Nav row */}
           <div className="flex items-center justify-between pt-4 pb-2">
             <Link href="/">
-              <Image src="/logo-white.png" alt="Startup MB" height={80} width={80} className="object-contain" />
+              <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
             <nav className="flex items-center gap-3 sm:gap-6">
               <Link
                 href="/about"
-                className="text-white/70 hover:text-white text-sm sm:text-base transition-colors font-medium"
+                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
               >
                 About
-              </Link>
-              <Link
-                href="/admin"
-                className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded font-semibold text-white/50 hover:text-white transition-colors"
-              >
-                Admin
               </Link>
             </nav>
           </div>
           {/* Headline */}
           <div className="max-w-4xl mx-auto text-center pt-6">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4" style={{ color: '#1B3A52' }}>
               Mapping the Myrtle Beach<br />
               <span style={{ color: '#3A9E9E' }}>Startup Ecosystem</span>
             </h1>
-            <p className="text-white/70 mb-8 text-base sm:text-lg mx-auto leading-relaxed sm:whitespace-nowrap">
+            <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed sm:whitespace-nowrap" style={{ color: '#4B5563' }}>
               Discover the companies, founders, and innovators building the future in the Grand Strand.
             </p>
             <form method="GET" className="flex gap-2 max-w-xl mx-auto">
@@ -99,7 +93,7 @@ export default async function PublicDirectory({
                 defaultValue={params.search}
                 placeholder="Search companies, founders, industries…"
                 className="flex-1 rounded-lg px-4 sm:px-5 py-3 text-sm"
-                style={{ border: 'none', backgroundColor: 'white' }}
+                style={{ backgroundColor: '#FFFFFF', border: '1.5px solid #dde8f0', color: '#1B3A52' }}
               />
               {params.industry && <input type="hidden" name="industry" value={params.industry} />}
               {params.stage && <input type="hidden" name="stage" value={params.stage} />}
@@ -112,34 +106,37 @@ export default async function PublicDirectory({
         </div>
       </section>
 
-      {/* Filters */}
-      <div className="border-b border-gray-200 bg-white shadow-sm sticky top-0 z-10">
+      {/* Filters — dark navy bar */}
+      <div className="sticky top-0 z-10" style={{ backgroundColor: '#1B3A52' }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <form method="GET" className="flex flex-wrap gap-3 sm:gap-4 py-4 items-center">
             {params.search && <input type="hidden" name="search" value={params.search} />}
             {params.sort && <input type="hidden" name="sort" value={params.sort} />}
-            <select name="industry" defaultValue={params.industry || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+            <select name="industry" defaultValue={params.industry || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
               <option value="">All Industries</option>
-              {INDUSTRIES.map((i) => <option key={i} value={i}>{i}</option>)}
+              {INDUSTRIES.map((i) => <option key={i} value={i} style={{ backgroundColor: '#1B3A52' }}>{i}</option>)}
             </select>
-            <select name="stage" defaultValue={params.stage || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+            <select name="stage" defaultValue={params.stage || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
               <option value="">All Stages</option>
-              {STAGES.map((s) => <option key={s} value={s}>{s}</option>)}
+              {STAGES.map((s) => <option key={s} value={s} style={{ backgroundColor: '#1B3A52' }}>{s}</option>)}
             </select>
-            <select name="funding" defaultValue={params.funding || ''} className="py-2 text-sm" style={{ width: 'auto' }}>
+            <select name="funding" defaultValue={params.funding || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
               <option value="">All Funding</option>
-              {FUNDING_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+              {FUNDING_OPTIONS.map((f) => <option key={f} value={f} style={{ backgroundColor: '#1B3A52' }}>{f}</option>)}
             </select>
-            <button type="submit" className="btn-ghost py-2">Filter</button>
+            <button type="submit" className="py-2 px-4 text-sm font-medium rounded-md transition-colors" style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)' }}>
+              Filter
+            </button>
             {hasFilters && (
-              <Link href="/" className="text-sm underline" style={{ color: '#F26522' }}>Clear all</Link>
+              <Link href="/" className="text-sm underline font-medium" style={{ color: '#F26522' }}>Clear all</Link>
             )}
             <div className="ml-auto flex items-center gap-3">
               <SortSelect
                 currentSort={params.sort || 'az'}
                 otherParams={{ search: params.search, industry: params.industry, stage: params.stage, funding: params.funding }}
+                dark
               />
-              <span className="text-sm font-medium text-gray-500">
+              <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
                 {results.length} {results.length === 1 ? 'company' : 'companies'}
               </span>
             </div>

@@ -21,7 +21,10 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
     })
     .returning();
 
-  await db.delete(suggestions).where(eq(suggestions.id, id));
+  await db
+    .update(suggestions)
+    .set({ status: 'accepted', accepted_at: now })
+    .where(eq(suggestions.id, id));
 
   return NextResponse.json({ ok: true, company });
 }

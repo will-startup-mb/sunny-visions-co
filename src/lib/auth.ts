@@ -56,6 +56,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: { strategy: 'jwt' },
-  pages: { signIn: '/admin/login' },
+  pages: { signIn: '/mb-hub/login' },
   secret: process.env.NEXTAUTH_SECRET,
 };

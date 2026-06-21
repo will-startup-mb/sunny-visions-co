@@ -2,6 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { companies } from '@/lib/db/schema';
 import { eq, ilike, or, desc, and } from 'drizzle-orm';
+import { buildFaviconUrl } from '@/lib/company-logo';
+
+function toSlugBase(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+async function generateUniqueSlug(name: string): Promise<string> {
+  const base = toSlugBase(name);
+  let slug = base;
+  let n = 1;
+  while (true) {
+    const [existing] = await db.select({ id: companies.id }).from(companies).where(eq(companies.slug, slug));
+    if (!existing) return slug;
+    slug = `${base}-${n++}`;
+  }
+}
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -51,8 +67,14 @@ function sanitize(body: Record<string, unknown>) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = sanitize(await req.json());
+    const body = sanitize(await req.json()) as Record<string, unknown>;
     const now = new Date();
+    if (!body.slug && body.company_name) {
+      body.slug = await generateUniqueSlug(body.company_name as string);
+    }
+    if (!body.logo_url && body.website) {
+      body.logo_url = buildFaviconUrl(body.website as string);
+    }
     const [row] = await db
       .insert(companies)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

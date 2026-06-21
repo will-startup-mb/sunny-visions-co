@@ -15,6 +15,39 @@ import {
 
 type FormData = Partial<Omit<Company, 'id' | 'created_at' | 'updated_at'>>;
 
+function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <label>{label}</label>
+      {children}
+      {hint && <p className="text-xs text-gray-500">{hint}</p>}
+    </div>
+  );
+}
+
+function BoolSelect({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: boolean | null | undefined;
+  onChange: (v: boolean | null) => void;
+}) {
+  return (
+    <Field label={label}>
+      <select
+        value={value === null || value === undefined ? '' : String(value)}
+        onChange={(e) => onChange(e.target.value === '' ? null : e.target.value === 'true')}
+      >
+        <option value="">Unknown</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </Field>
+  );
+}
+
 export function CompanyForm({ company }: { company?: Company }) {
   const router = useRouter();
   const isEdit = !!company;
@@ -50,17 +83,36 @@ export function CompanyForm({ company }: { company?: Company }) {
     podcast_episode: company?.podcast_episode || '',
     source_list: company?.source_list || '',
     research_notes: company?.research_notes || '',
+    logo_bg_color: company?.logo_bg_color || '#FFFFFF',
+    logo_upload_url: company?.logo_upload_url || '',
   });
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [logoUrl, setLogoUrl] = useState(company?.logo_url || '');
+  const [logoUrl, setLogoUrl] = useState(company?.logo_upload_url || '');
+  const [logoVersion, setLogoVersion] = useState(0);
   const [logoUploading, setLogoUploading] = useState(false);
+  const [logoDeleting, setLogoDeleting] = useState(false);
   const [logoError, setLogoError] = useState('');
   const logoInputRef = useRef<HTMLInputElement>(null);
 
   const set = (field: keyof FormData, value: unknown) =>
     setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handleLogoDelete = async () => {
+    if (!company) return;
+    if (!confirm('Remove uploaded logo?')) return;
+    setLogoDeleting(true);
+    setLogoError('');
+    const res = await fetch(`/api/companies/${company.id}/logo`, { method: 'DELETE' });
+    if (res.ok) {
+      setLogoUrl('');
+      set('logo_upload_url', '');
+    } else {
+      setLogoError('Delete failed');
+    }
+    setLogoDeleting(false);
+  };
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -73,6 +125,8 @@ export function CompanyForm({ company }: { company?: Company }) {
     if (res.ok) {
       const { logo_url } = await res.json();
       setLogoUrl(logo_url);
+      set('logo_upload_url', logo_url);
+      setLogoVersion((v) => v + 1);
     } else {
       setLogoError('Upload failed');
     }
@@ -95,7 +149,7 @@ export function CompanyForm({ company }: { company?: Company }) {
     });
 
     if (res.ok) {
-      router.push('/admin/companies');
+      router.push('/mb-hub/companies');
       router.refresh();
     } else {
       let message = 'Save failed';
@@ -110,37 +164,6 @@ export function CompanyForm({ company }: { company?: Company }) {
     }
   };
 
-  const Field = ({
-    label,
-    children,
-    hint,
-  }: {
-    label: string;
-    children: React.ReactNode;
-    hint?: string;
-  }) => (
-    <div className="flex flex-col gap-1">
-      <label>{label}</label>
-      {children}
-      {hint && <p className="text-xs text-gray-500">{hint}</p>}
-    </div>
-  );
-
-  const BoolSelect = ({ field, label }: { field: keyof FormData; label: string }) => (
-    <Field label={label}>
-      <select
-        value={form[field] === null || form[field] === undefined ? '' : String(form[field])}
-        onChange={(e) =>
-          set(field, e.target.value === '' ? null : e.target.value === 'true')
-        }
-      >
-        <option value="">Unknown</option>
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-    </Field>
-  );
-
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {error && (
@@ -154,28 +177,72 @@ export function CompanyForm({ company }: { company?: Company }) {
         <h2 className="font-bold text-base" style={{ color: '#1B3A52' }}>Core Info</h2>
 
         {isEdit && (
-          <div className="flex items-center gap-4 pb-2 border-b border-gray-100">
+          <div className="flex items-start gap-4 pb-2 border-b border-gray-100">
             <div
               className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0"
-              style={{ backgroundColor: '#1B3A52' }}
+              style={{ backgroundColor: form.logo_bg_color ?? '#FFFFFF' }}
             >
-              {logoUrl ? (
-                <Image src={`${logoUrl}?v=${Date.now()}`} alt="Logo" fill className="object-contain p-1" unoptimized />
+              {(logoUrl || company?.logo_url) ? (
+                <Image
+                  src={logoUrl ? `${logoUrl}${logoVersion > 0 ? `?v=${logoVersion}` : ''}` : company!.logo_url!}
+                  alt="Logo" fill className="object-contain p-1" unoptimized
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-white font-bold text-2xl">
                   {form.company_name?.charAt(0) || '?'}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2 flex-1">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Company Logo</p>
-              <label
-                htmlFor="logo-upload"
-                className="btn-ghost text-xs cursor-pointer inline-block"
-                style={{ padding: '4px 12px' }}
-              >
-                {logoUploading ? 'Uploading…' : logoUrl ? 'Replace logo' : 'Upload logo'}
-              </label>
+              <div className="flex items-center gap-2 flex-wrap">
+                <label
+                  htmlFor="logo-upload"
+                  className="btn-ghost text-xs cursor-pointer inline-block"
+                  style={{ padding: '4px 12px' }}
+                >
+                  {logoUploading ? 'Uploading…' : logoUrl ? 'Replace' : 'Upload logo'}
+                </label>
+                {form.logo_upload_url && (
+                  <button
+                    type="button"
+                    onClick={handleLogoDelete}
+                    disabled={logoDeleting}
+                    className="text-xs px-3 py-1 rounded border border-red-200 text-red-500 hover:bg-red-50 transition-colors disabled:opacity-50"
+                  >
+                    {logoDeleting ? 'Removing…' : 'Remove Logo'}
+                  </button>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-xs text-gray-500 whitespace-nowrap">Background:</label>
+                <select
+                  value={form.logo_bg_color ?? '#FFFFFF'}
+                  onChange={(e) => set('logo_bg_color', e.target.value)}
+                  className="text-xs"
+                  style={{ width: 'auto', padding: '2px 6px' }}
+                >
+                  <option value="#4A4A4A">Dark Grey</option>
+                  <option value="#FFFFFF">White</option>
+                  <option value="#000000">Black</option>
+                  <option value="#1B3A4B">Navy</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="text-xs text-gray-500">Custom logo URL (overrides favicon)</label>
+                <input
+                  type="url"
+                  value={form.logo_upload_url ?? ''}
+                  onChange={(e) => {
+                    set('logo_upload_url', e.target.value);
+                    setLogoUrl(e.target.value);
+                    setLogoVersion((v) => v + 1);
+                  }}
+                  placeholder="https://example.com/logo.png"
+                  className="text-xs"
+                  style={{ padding: '4px 8px' }}
+                />
+              </div>
               <input
                 id="logo-upload"
                 ref={logoInputRef}
@@ -186,7 +253,6 @@ export function CompanyForm({ company }: { company?: Company }) {
                 disabled={logoUploading}
               />
               {logoError && <p className="text-xs text-red-500">{logoError}</p>}
-              {logoUrl && <p className="text-xs text-gray-400">PNG, JPG, SVG — stored in /public/logos/</p>}
             </div>
           </div>
         )}
@@ -363,10 +429,10 @@ export function CompanyForm({ company }: { company?: Company }) {
           </Field>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <BoolSelect field="has_about_page" label="Has About Page" />
-          <BoolSelect field="has_team_page" label="Has Team Page" />
-          <BoolSelect field="social_media_active" label="Social Media Active" />
-          <BoolSelect field="press_coverage" label="Press Coverage" />
+          <BoolSelect label="Has About Page" value={form.has_about_page} onChange={(v) => set('has_about_page', v)} />
+          <BoolSelect label="Has Team Page" value={form.has_team_page} onChange={(v) => set('has_team_page', v)} />
+          <BoolSelect label="Social Media Active" value={form.social_media_active} onChange={(v) => set('social_media_active', v)} />
+          <BoolSelect label="Press Coverage" value={form.press_coverage} onChange={(v) => set('press_coverage', v)} />
         </div>
         <Field label="Research Notes (raw pipeline output)">
           <textarea
@@ -454,7 +520,7 @@ export function CompanyForm({ company }: { company?: Company }) {
         <button
           type="button"
           className="btn-ghost"
-          onClick={() => router.push('/admin/companies')}
+          onClick={() => router.push('/mb-hub/companies')}
         >
           Cancel
         </button>

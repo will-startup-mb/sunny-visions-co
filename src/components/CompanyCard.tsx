@@ -4,16 +4,16 @@ import type { Company } from '@/lib/db/schema';
 
 export function CompanyCard({ company }: { company: Company }) {
   return (
-    <Link href={`/companies/${company.id}`} className="block group">
+    <Link href={`/companies/${company.slug ?? company.id}`} className="block group">
       <div className="card p-5 h-full flex flex-col gap-3 transition-shadow group-hover:shadow-lg">
         {/* Header row: avatar + city */}
         <div className="flex items-start justify-between gap-3">
           <div
             className="relative w-14 h-14 rounded-xl overflow-hidden flex-shrink-0"
-            style={{ backgroundColor: '#1B3A52' }}
+            style={{ backgroundColor: company.logo_bg_color ?? '#FFFFFF' }}
           >
-            {company.logo_url ? (
-              <Image src={company.logo_url} alt={company.company_name} fill className="object-contain p-1" unoptimized />
+            {(company.logo_upload_url ?? company.logo_url) ? (
+              <Image src={(company.logo_upload_url ?? company.logo_url)!} alt={company.company_name} fill className="object-contain p-1" unoptimized />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white font-bold text-xl">
                 {company.company_name.charAt(0)}

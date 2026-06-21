@@ -15,7 +15,7 @@ export default function NotFound() {
               <Link href="/about" className="text-white/70 hover:text-white text-sm sm:text-base transition-colors font-medium">
                 About
               </Link>
-              <Link href="/admin" className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded font-semibold text-white/50 hover:text-white transition-colors">
+              <Link href='/mb-hub' className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded font-semibold text-white/50 hover:text-white transition-colors">
                 Admin
               </Link>
             </nav>

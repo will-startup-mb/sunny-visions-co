@@ -23,7 +23,7 @@ export function CorrectionForm({ companyName }: { companyName: string }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+        className="w-full justify-center inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-colors"
         style={{ border: '1.5px solid #F26522', color: '#F26522', background: 'white' }}
         onMouseEnter={e => (e.currentTarget.style.background = '#fff5f0')}
         onMouseLeave={e => (e.currentTarget.style.background = 'white')}
