@@ -71,6 +71,12 @@ export default async function PublicDirectory({
             </Link>
             <nav className="flex items-center gap-3 sm:gap-6">
               <Link
+                href="/podcast"
+                className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
+              >
+                Podcast
+              </Link>
+              <Link
                 href="/blog"
                 className="text-sm sm:text-base transition-colors font-medium text-gray-600 hover:text-gray-900"
               >
