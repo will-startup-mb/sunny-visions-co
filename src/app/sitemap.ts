@@ -3,6 +3,8 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db';
 import { companies } from '@/lib/db/schema';
 
+export const dynamic = 'force-dynamic';
+
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://startupmb.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
