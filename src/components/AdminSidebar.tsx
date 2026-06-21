@@ -13,6 +13,7 @@ const navItems = [
   { href: '/mb-hub/research-history', label: 'Research History' },
   { href: '/mb-hub/cost-dashboard', label: 'Cost Dashboard' },
   { href: '/mb-hub/industries', label: 'Industries' },
+  { href: '/mb-hub/reports', label: 'Reports' },
   { href: '/mb-hub/stats', label: 'Statistics' },
   { href: '/mb-hub/security', label: 'Security' },
 ];
