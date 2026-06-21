@@ -3,6 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PublicFooter } from '@/components/PublicFooter';
 import { PublicNav } from '@/components/PublicNav';
+import { getSiteContent } from '@/lib/db/site-content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Podcast',
@@ -33,7 +36,16 @@ function YouTubeIcon() {
   );
 }
 
-export default function PodcastPage() {
+const PLATFORM_BUTTONS = [
+  { key: 'podcast_spotify_url' as const, label: 'Spotify', Icon: SpotifyIcon, color: '#1DB954' },
+  { key: 'podcast_apple_url' as const, label: 'Apple Podcasts', Icon: AppleIcon, color: '#872EC4' },
+  { key: 'podcast_youtube_url' as const, label: 'YouTube', Icon: YouTubeIcon, color: '#FF0000' },
+];
+
+export default async function PodcastPage() {
+  const content = await getSiteContent();
+  const paragraphs = content.podcast_show_description.split('\n\n').filter(Boolean);
+
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
       <header style={{ backgroundColor: '#F8F9FA' }}>
@@ -48,44 +60,48 @@ export default function PodcastPage() {
       </header>
 
       <main className="flex-1 max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto w-full px-6 pt-12 pb-24">
-        <h1 className="text-4xl font-extrabold mb-6" style={{ color: '#1B3A52' }}>The Startup MB Podcast</h1>
+        <h1 className="text-4xl font-extrabold mb-6" style={{ color: '#1B3A52' }}>
+          {content.podcast_show_title}
+        </h1>
 
-        <p className="text-gray-600 text-lg leading-relaxed mb-4">
-          Real conversations with the founders, operators, and community builders who are quietly building something in Myrtle Beach, SC.
-        </p>
-        <p className="text-gray-600 text-lg leading-relaxed mb-10">
-          Every episode goes behind the scenes of a local startup — the origin story, the obstacles, the lessons, and what&apos;s next. If you&apos;ve ever wondered who&apos;s actually building things in the Grand Strand, this is the show.
-        </p>
+        {paragraphs.map((p, i) => (
+          <p key={i} className="text-gray-600 text-lg leading-relaxed mb-4">
+            {p}
+          </p>
+        ))}
 
         {/* Platform buttons */}
-        <div className="flex flex-wrap gap-3 mb-14">
-          <button
-            disabled
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity disabled:opacity-40 cursor-not-allowed"
-            style={{ backgroundColor: '#1DB954' }}
-            title="Coming soon"
-          >
-            <SpotifyIcon />
-            Spotify
-          </button>
-          <button
-            disabled
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity disabled:opacity-40 cursor-not-allowed"
-            style={{ backgroundColor: '#872EC4' }}
-            title="Coming soon"
-          >
-            <AppleIcon />
-            Apple Podcasts
-          </button>
-          <button
-            disabled
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity disabled:opacity-40 cursor-not-allowed"
-            style={{ backgroundColor: '#FF0000' }}
-            title="Coming soon"
-          >
-            <YouTubeIcon />
-            YouTube
-          </button>
+        <div className="flex flex-wrap gap-3 mt-6 mb-14">
+          {PLATFORM_BUTTONS.map(({ key, label, Icon, color }) => {
+            const url = content[key];
+            if (url) {
+              return (
+                <a
+                  key={key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-85"
+                  style={{ backgroundColor: color }}
+                >
+                  <Icon />
+                  {label}
+                </a>
+              );
+            }
+            return (
+              <button
+                key={key}
+                disabled
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white opacity-40 cursor-not-allowed"
+                style={{ backgroundColor: color }}
+                title="Coming soon"
+              >
+                <Icon />
+                {label}
+              </button>
+            );
+          })}
         </div>
 
         <div className="space-y-10">

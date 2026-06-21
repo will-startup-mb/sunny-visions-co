@@ -3,13 +3,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PublicFooter } from '@/components/PublicFooter';
 import { PublicNav } from '@/components/PublicNav';
+import { getSiteContent } from '@/lib/db/site-content';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Events',
   description: 'Upcoming Startup MB events in the Myrtle Beach area.',
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const content = await getSiteContent();
+
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
       <header style={{ backgroundColor: '#F8F9FA' }}>
@@ -24,11 +29,13 @@ export default function EventsPage() {
       </header>
 
       <main className="flex-1 max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto w-full px-6 pt-12 pb-24">
-        <h1 className="text-4xl font-extrabold mb-2" style={{ color: '#1B3A52' }}>Events</h1>
+        <h1 className="text-4xl font-extrabold mb-2" style={{ color: '#1B3A52' }}>
+          {content.events_headline}
+        </h1>
         <div className="w-10 h-1 rounded-full mb-10" style={{ backgroundColor: '#F26522' }} />
 
         <p className="text-gray-600 text-lg leading-relaxed mb-12">
-          Startup MB brings together the founders, builders, and community leaders of the Grand Strand. Networking nights, founder dinners, pitch events, and more — all coming to Myrtle Beach.
+          {content.events_description}
         </p>
 
         <div className="flex flex-col items-center justify-center py-20 px-8 rounded-2xl border-2 border-dashed border-gray-200 text-center">
@@ -58,14 +65,16 @@ export default function EventsPage() {
             <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-1">Stay in the loop</p>
             <p className="text-gray-600 text-base">Follow on Instagram for event announcements and community updates.</p>
           </div>
-          <a
-            href="https://www.instagram.com/startupmyrtlebeach"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary shrink-0"
-          >
-            Follow on Instagram
-          </a>
+          {content.events_instagram_url && (
+            <a
+              href={content.events_instagram_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary shrink-0"
+            >
+              Follow on Instagram
+            </a>
+          )}
         </div>
       </main>
 

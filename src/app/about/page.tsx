@@ -34,7 +34,7 @@ export default async function AboutPage() {
           {siteContent.about_intro}
         </p>
         <p className="text-gray-600 text-lg leading-relaxed mb-12">
-          Founded by Will McCaffrey, Startup MB started as a simple question: <em>who&apos;s actually building things here?</em> What began as a Google Sheet has grown into a live, searchable directory of local startups, researched, categorized, and updated regularly.
+          {siteContent.about_will_bio}
         </p>
         <div className="space-y-10">
           <section>

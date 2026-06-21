@@ -27,6 +27,9 @@ export async function PUT(req: NextRequest) {
 
   revalidatePath('/');
   revalidatePath('/about');
+  revalidatePath('/podcast');
+  revalidatePath('/events');
+  revalidatePath('/sponsors');
 
   return NextResponse.json({ ok: true });
 }
