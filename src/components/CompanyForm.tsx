@@ -93,11 +93,28 @@ export function CompanyForm({ company }: { company?: Company }) {
   const [logoVersion, setLogoVersion] = useState(0);
   const [logoUploading, setLogoUploading] = useState(false);
   const [logoDeleting, setLogoDeleting] = useState(false);
+  const [faviconRefreshing, setFaviconRefreshing] = useState(false);
   const [logoError, setLogoError] = useState('');
   const logoInputRef = useRef<HTMLInputElement>(null);
 
   const set = (field: keyof FormData, value: unknown) =>
     setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handleFaviconRefresh = async () => {
+    if (!company) return;
+    setFaviconRefreshing(true);
+    setLogoError('');
+    const res = await fetch(`/api/companies/${company.id}/favicon`, { method: 'POST' });
+    if (res.ok) {
+      const { logo_url } = await res.json();
+      setLogoUrl(logo_url);
+      setLogoVersion((v) => v + 1);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setLogoError(data.error || 'Favicon refresh failed');
+    }
+    setFaviconRefreshing(false);
+  };
 
   const handleLogoDelete = async () => {
     if (!company) return;
@@ -203,6 +220,16 @@ export function CompanyForm({ company }: { company?: Company }) {
                 >
                   {logoUploading ? 'Uploading…' : logoUrl ? 'Replace' : 'Upload logo'}
                 </label>
+                <button
+                  type="button"
+                  onClick={handleFaviconRefresh}
+                  disabled={faviconRefreshing || !form.website}
+                  className="btn-ghost text-xs disabled:opacity-40"
+                  style={{ padding: '4px 12px' }}
+                  title={!form.website ? 'No website URL set' : 'Re-fetch favicon from Google'}
+                >
+                  {faviconRefreshing ? 'Refreshing…' : 'Refresh Favicon'}
+                </button>
                 {form.logo_upload_url && (
                   <button
                     type="button"
