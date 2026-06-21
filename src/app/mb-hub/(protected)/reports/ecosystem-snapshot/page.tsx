@@ -20,7 +20,7 @@ function BarRow({ label, count, max, total, color }: { label: string; count: num
   const pct = Math.round((count / total) * 100);
   const barWidth = Math.round((count / max) * 100);
   return (
-    <div className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">
+    <div className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0 break-inside-avoid">
       <span className="text-sm text-gray-700 w-48 flex-shrink-0 leading-snug">{label}</span>
       <div className="flex-1 h-2 rounded-full" style={{ backgroundColor: '#EEF2F6' }}>
         <div
@@ -36,8 +36,8 @@ function BarRow({ label, count, max, total, color }: { label: string; count: num
 
 function Section({ title, accent, children }: { title: string; accent: string; children: React.ReactNode }) {
   return (
-    <section className="mb-8 print:mb-6 print:break-inside-avoid">
-      <div className="flex items-center gap-3 mb-4">
+    <section className="mb-8 print:mb-6">
+      <div className="flex items-center gap-3 mb-4 break-after-avoid">
         <div className="w-1 h-5 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} />
         <h2 className="text-base font-bold tracking-wide uppercase" style={{ color: '#1B3A52', fontSize: '0.8rem', letterSpacing: '0.08em' }}>{title}</h2>
       </div>
@@ -90,31 +90,12 @@ export default async function EcosystemSnapshotPage() {
           size: A4 portrait;
         }
         @media print {
-          /* Colour accuracy */
           html, body {
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
           }
-          /* ── The key fix ──────────────────────────────────────────────────
-             AdminShell wraps everything in:
-               div.flex.h-screen.overflow-hidden          ← clips to viewport
-                 div.flex-col.flex-1.overflow-hidden      ← same
-                   main.flex-1.overflow-y-auto            ← scroll instead of grow
-             Override all three so the full document height flows to the printer.
-          ─────────────────────────────────────────────────────────────────── */
-          html, body { height: auto !important; overflow: visible !important; }
-          .h-screen  { height: auto !important; }
-          .overflow-hidden { overflow: visible !important; }
-          .overflow-y-auto { overflow: visible !important; height: auto !important; }
-
-          /* Hide sidebar */
-          aside { display: none !important; }
-
-          /* Prevent table rows from splitting across pages */
-          tr { break-inside: avoid; page-break-inside: avoid; }
-
-          /* Let the report card fill the page naturally */
-          .report-card { max-width: 100% !important; padding: 0 !important; }
+          tr { break-inside: avoid; }
+          thead { break-after: avoid; }
         }
       `}</style>
 
