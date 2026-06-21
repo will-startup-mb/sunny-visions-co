@@ -4,7 +4,6 @@ import { siteContent } from '@/lib/db/schema';
 
 export const SITE_CONTENT_DEFAULTS: Record<string, string> = {
   // ── Home ──────────────────────────────────────────────────────────────────
-  hero_headline: 'Mapping the Myrtle Beach\nStartup Ecosystem',
   hero_subheadline: 'Discover the companies, founders, and innovators building the future in the Grand Strand.',
   home_search_placeholder: 'Search companies, founders, industries…',
   home_empty_heading: 'No companies found',

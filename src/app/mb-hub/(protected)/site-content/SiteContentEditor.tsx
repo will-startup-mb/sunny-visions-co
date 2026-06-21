@@ -25,7 +25,6 @@ const SECTIONS: Section[] = [
     title: 'Home',
     accent: '#1B3A52',
     fields: [
-      { key: 'hero_headline', label: 'Hero Headline', hint: 'Line 1 appears in navy, line 2 in teal. Press Enter between them.', multiline: true, rows: 2 },
       { key: 'hero_subheadline', label: 'Hero Subheadline', hint: 'Supporting paragraph below the headline.' },
       { key: 'home_search_placeholder', label: 'Search Placeholder', hint: 'Placeholder text inside the search input.' },
       { key: 'home_empty_heading', label: 'No Results Heading', hint: 'Shown when a search returns no companies.' },
