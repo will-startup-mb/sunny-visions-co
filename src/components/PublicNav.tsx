@@ -7,6 +7,8 @@ const NAV_LINKS = [
   { href: '/podcast', label: 'Podcast' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
+  { href: '/events', label: 'Events' },
+  { href: '/sponsors', label: 'Sponsors' },
 ];
 
 export function PublicNav() {
