@@ -9,7 +9,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://startupmb.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const published = await db
-    .select({ slug: companies.slug, updated_at: companies.updated_at })
+    .select()
     .from(companies)
     .where(eq(companies.is_published, true));
 
