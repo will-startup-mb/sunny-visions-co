@@ -58,7 +58,7 @@ export default async function PublicDirectory({
   searchParams: Promise<SearchParams>;
 }) {
   const params = await searchParams;
-  const [results, siteContent] = await Promise.all([
+  const [results, content] = await Promise.all([
     getCompanies(params),
     getSiteContent(),
   ]);
@@ -69,26 +69,24 @@ export default async function PublicDirectory({
       {/* Hero */}
       <section style={{ backgroundColor: '#F8F9FA' }} className="pb-14">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          {/* Nav row */}
           <div className="flex items-center justify-between pt-4 pb-2">
             <Link href="/">
               <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
             </Link>
             <PublicNav />
           </div>
-          {/* Headline */}
           <div className="max-w-4xl mx-auto text-center pt-6">
             <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4" style={{ color: '#1B3A52' }}>
-              {siteContent.hero_headline}
+              {content.hero_headline}
             </h1>
             <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed" style={{ color: '#4B5563' }}>
-              {siteContent.hero_subheadline}
+              {content.hero_subheadline}
             </p>
             <form method="GET" className="flex gap-2 max-w-xl mx-auto">
               <input
                 name="search"
                 defaultValue={params.search}
-                placeholder="Search companies, founders, industries…"
+                placeholder={content.home_search_placeholder}
                 className="flex-1 rounded-lg px-4 sm:px-5 py-3 text-sm"
                 style={{ backgroundColor: '#FFFFFF', border: '1.5px solid #dde8f0', color: '#1B3A52' }}
               />
@@ -103,7 +101,7 @@ export default async function PublicDirectory({
         </div>
       </section>
 
-      {/* Filters — dark navy bar */}
+      {/* Filters */}
       <div className="sticky top-0 z-10" style={{ backgroundColor: '#1B3A52' }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <form method="GET" className="flex flex-wrap gap-3 sm:gap-4 py-4 items-center">
@@ -146,8 +144,8 @@ export default async function PublicDirectory({
         {results.length === 0 ? (
           <div className="text-center py-16 text-gray-500">
             <p className="text-5xl mb-6">🔍</p>
-            <p className="text-xl font-medium">No companies found</p>
-            <p className="mt-2">Try adjusting your search or filters.</p>
+            <p className="text-xl font-medium">{content.home_empty_heading}</p>
+            <p className="mt-2">{content.home_empty_body}</p>
             <Link href="/" className="btn-primary mt-8 inline-flex">Clear filters</Link>
           </div>
         ) : (

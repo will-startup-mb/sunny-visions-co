@@ -43,8 +43,8 @@ const PLATFORM_BUTTONS = [
 ];
 
 export default async function PodcastPage() {
-  const content = await getSiteContent();
-  const paragraphs = content.podcast_show_description.split('\n\n').filter(Boolean);
+  const c = await getSiteContent();
+  const paragraphs = c.podcast_show_description.split('\n\n').filter(Boolean);
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
@@ -60,36 +60,27 @@ export default async function PodcastPage() {
       </header>
 
       <main className="flex-1 max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto w-full px-6 pt-12 pb-24">
-        <h1 className="text-4xl font-extrabold mb-6" style={{ color: '#1B3A52' }}>
-          {content.podcast_show_title}
-        </h1>
+        <h1 className="text-4xl font-extrabold mb-6" style={{ color: '#1B3A52' }}>{c.podcast_show_title}</h1>
 
         {paragraphs.map((p, i) => (
-          <p key={i} className="text-gray-600 text-lg leading-relaxed mb-4">
-            {p}
-          </p>
+          <p key={i} className="text-gray-600 text-lg leading-relaxed mb-4">{p}</p>
         ))}
 
-        {/* Platform buttons */}
         <div className="flex flex-wrap gap-3 mt-6 mb-14">
           {PLATFORM_BUTTONS.map(({ key, label, Icon, color }) => {
-            const url = content[key];
-            if (url) {
-              return (
-                <a
-                  key={key}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-85"
-                  style={{ backgroundColor: color }}
-                >
-                  <Icon />
-                  {label}
-                </a>
-              );
-            }
-            return (
+            const url = c[key];
+            return url ? (
+              <a
+                key={key}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-85"
+                style={{ backgroundColor: color }}
+              >
+                <Icon />{label}
+              </a>
+            ) : (
               <button
                 key={key}
                 disabled
@@ -97,8 +88,7 @@ export default async function PodcastPage() {
                 style={{ backgroundColor: color }}
                 title="Coming soon"
               >
-                <Icon />
-                {label}
+                <Icon />{label}
               </button>
             );
           })}
@@ -106,19 +96,15 @@ export default async function PodcastPage() {
 
         <div className="space-y-10">
           <section>
-            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1B3A52' }}>The Format</h2>
+            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1B3A52' }}>{c.podcast_format_heading}</h2>
             <div className="w-10 h-1 rounded-full mb-4" style={{ backgroundColor: '#3A9E9E' }} />
-            <p className="text-gray-600 leading-relaxed">
-              Each episode is a long-form conversation with one guest — a founder, investor, or ecosystem builder with roots in the Myrtle Beach area. We dig into how they got started, what building locally actually looks like, and what they wish they&apos;d known earlier.
-            </p>
+            <p className="text-gray-600 leading-relaxed">{c.podcast_format_body}</p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1B3A52' }}>Who We Talk To</h2>
+            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1B3A52' }}>{c.podcast_guests_heading}</h2>
             <div className="w-10 h-1 rounded-full mb-4" style={{ backgroundColor: '#F26522' }} />
-            <p className="text-gray-600 leading-relaxed">
-              Early-stage founders. Bootstrapped operators. Serial entrepreneurs. Community connectors. If you&apos;re building something real in the Grand Strand — or you helped make the ecosystem what it is today — we want to tell your story.
-            </p>
+            <p className="text-gray-600 leading-relaxed">{c.podcast_guests_body}</p>
           </section>
 
           <section>
@@ -126,14 +112,8 @@ export default async function PodcastPage() {
             <div className="w-10 h-1 rounded-full mb-4" style={{ backgroundColor: '#1B3A52' }} />
             <div className="card p-8 text-center">
               <p className="text-2xl mb-2">🎙️</p>
-              <p className="font-semibold mb-1" style={{ color: '#1B3A52' }}>Episodes coming soon</p>
-              <p className="text-sm text-gray-500">
-                We&apos;re recording now. Follow us on{' '}
-                <a href="https://www.instagram.com/startupmyrtlebeach" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70" style={{ color: '#3A9E9E' }}>
-                  Instagram
-                </a>{' '}
-                to be the first to know when episodes drop.
-              </p>
+              <p className="font-semibold mb-1" style={{ color: '#1B3A52' }}>{c.podcast_episodes_empty_heading}</p>
+              <p className="text-sm text-gray-500">{c.podcast_episodes_empty_body}</p>
             </div>
           </section>
         </div>
