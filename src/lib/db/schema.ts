@@ -31,10 +31,15 @@ export const companies = pgTable('companies', {
   interviewed: boolean('interviewed').default(false),
   podcast_episode: text('podcast_episode'),
   logo_url: text('logo_url'),
+  logo_upload_url: text('logo_upload_url'),
+  logo_bg_color: text('logo_bg_color').default('#FFFFFF'),
   source_list: text('source_list'),
   research_date: date('research_date'),
   research_notes: text('research_notes'),
+  slug: text('slug').unique(),
   is_published: boolean('is_published').default(false),
+  confidence_scores: text('confidence_scores'), // JSON: { field: 'high'|'medium'|'low' }
+  field_refresh_dates: text('field_refresh_dates'), // JSON: { field: 'YYYY-MM-DD' }
   created_at: timestamp('created_at').defaultNow().notNull(),
   updated_at: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -50,6 +55,8 @@ export const suggestions = pgTable('suggestions', {
   submitter_name: text('submitter_name').notNull(),
   submitter_email: text('submitter_email').notNull(),
   created_at: timestamp('created_at').defaultNow().notNull(),
+  status: text('status').notNull().default('pending'),
+  accepted_at: timestamp('accepted_at'),
 });
 
 export type Suggestion = typeof suggestions.$inferSelect;
@@ -63,10 +70,28 @@ export const researchHistory = pgTable('research_history', {
   estimated_cost_usd: text('estimated_cost_usd').notNull(),
   input_tokens: integer('input_tokens'),
   output_tokens: integer('output_tokens'),
+  cache_read_tokens: integer('cache_read_tokens'),
+  cache_write_tokens: integer('cache_write_tokens'),
+  run_type: text('run_type').default('single'), // 'single' | 'batch'
+  batch_job_id: uuid('batch_job_id'),
   error_message: text('error_message'),
 });
 
 export type ResearchHistory = typeof researchHistory.$inferSelect;
+
+export const batchJobs = pgTable('batch_jobs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  anthropic_batch_id: text('anthropic_batch_id').notNull().unique(),
+  company_ids: text('company_ids').notNull(), // JSON: [{ id, name }]
+  status: text('status').notNull().default('pending'), // pending|processing|complete|failed
+  total_companies: integer('total_companies').notNull(),
+  completed_companies: integer('completed_companies').default(0),
+  estimated_cost_usd: text('estimated_cost_usd'),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  completed_at: timestamp('completed_at'),
+});
+
+export type BatchJob = typeof batchJobs.$inferSelect;
 
 export const adminSettings = pgTable('admin_settings', {
   key: text('key').primaryKey(),
