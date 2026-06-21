@@ -27,7 +27,7 @@ export function AdminSidebar({ onClose }: Props) {
 
   return (
     <aside
-      className="w-56 flex-shrink-0 h-screen flex flex-col"
+      className="w-56 flex-shrink-0 h-full flex flex-col"
       style={{ backgroundColor: '#1B3A52' }}
     >
       {/* Logo */}
@@ -49,7 +49,7 @@ export function AdminSidebar({ onClose }: Props) {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 p-3 space-y-1">
+      <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {navItems.map((item) => {
           const active = pathname.startsWith(item.href);
           return (
