@@ -28,7 +28,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       {/* Sidebar — slides in on mobile, static on desktop */}
       <div
-        className={`fixed inset-y-0 left-0 z-30 transition-transform duration-200 ease-in-out lg:static lg:z-auto lg:translate-x-0 print:hidden ${
+        className={`fixed top-0 left-0 h-svh z-30 transition-transform duration-200 ease-in-out lg:static lg:z-auto lg:translate-x-0 print:hidden ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >

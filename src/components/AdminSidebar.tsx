@@ -27,7 +27,7 @@ export function AdminSidebar({ onClose }: Props) {
 
   return (
     <aside
-      className="w-56 flex-shrink-0 h-full flex flex-col"
+      className="w-56 flex-shrink-0 h-svh flex flex-col"
       style={{ backgroundColor: '#1B3A52' }}
     >
       {/* Logo */}
