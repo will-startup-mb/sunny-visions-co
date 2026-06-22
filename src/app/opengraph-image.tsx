@@ -16,8 +16,8 @@ export default function OGImage() {
           display: 'flex',
           backgroundColor: '#F5EFE0',
           backgroundImage: `url(${BASE_URL}/logo.png)`,
-          backgroundSize: '1100px 1100px',
-          backgroundPosition: 'center center',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       />
