@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
-import { PublicNav } from '@/components/PublicNav';
+import { PublicHeader } from '@/components/PublicHeader';
 import { PublicFooter } from '@/components/PublicFooter';
 import { getSiteContent } from '@/lib/db/site-content';
-import { HaveAVisionSection } from '@/components/HaveAVisionSection';
+import { HaveAVisionToggle } from '@/components/HaveAVisionToggle';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,19 +24,9 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* NAV */}
-      <header style={{ backgroundColor: '#F5EFE0', borderBottom: '1px solid #e0d5c4' }}>
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="flex items-center justify-between py-4">
-            <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} priority />
-            </Link>
-            <PublicNav />
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
 
-      {/* HERO — add /public/hero.jpg for a beach photo background */}
+      {/* HERO */}
       <section
         className="relative flex flex-col items-center justify-center text-center"
         style={{
@@ -62,7 +51,7 @@ export default async function HomePage() {
           >
             ONE STOP SHOP FOR<br />CONTENT, DESIGN, &amp; BRANDING
           </h1>
-          <Link
+          <a
             href="#vision"
             className="inline-block font-bold uppercase tracking-widest transition-opacity hover:opacity-90"
             style={{
@@ -76,7 +65,7 @@ export default async function HomePage() {
             }}
           >
             LET&apos;S MAKE YOUR VISION HAPPEN →
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -111,7 +100,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ABOUT — add /public/claire.jpg for Claire's photo */}
+      {/* ABOUT */}
       <section className="py-10 sm:py-12 px-6" style={{ backgroundColor: '#F5EFE0' }}>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div
@@ -160,7 +149,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <HaveAVisionSection />
+      <HaveAVisionToggle phone={c.footer_phone} email={c.footer_email} />
 
       <PublicFooter />
     </div>

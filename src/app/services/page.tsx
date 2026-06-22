@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
-import { PublicNav } from '@/components/PublicNav';
+import { PublicHeader } from '@/components/PublicHeader';
 import { PublicFooter } from '@/components/PublicFooter';
 import { getSiteContent } from '@/lib/db/site-content';
 
@@ -52,16 +51,7 @@ export default async function ServicesPage() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F5EFE0' }}>
-      <header className="border-b" style={{ borderColor: '#e0d5c4', backgroundColor: '#F5EFE0' }}>
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex items-center justify-between py-4">
-            <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} />
-            </Link>
-            <PublicNav />
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="flex-1">
         {/* Hero */}

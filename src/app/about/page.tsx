@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
+import { PublicHeader } from '@/components/PublicHeader';
 import { PublicFooter } from '@/components/PublicFooter';
-import { PublicNav } from '@/components/PublicNav';
-import { HaveAVisionSection } from '@/components/HaveAVisionSection';
+import { HaveAVisionToggle } from '@/components/HaveAVisionToggle';
 import { getSiteContent } from '@/lib/db/site-content';
 
 export const dynamic = 'force-dynamic';
@@ -18,19 +16,10 @@ export default async function AboutPage() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F5EFE0' }}>
-      <header style={{ backgroundColor: '#F5EFE0', borderBottom: '1px solid #e0d5c4' }}>
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="flex items-center justify-between py-4">
-            <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} priority />
-            </Link>
-            <PublicNav />
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
 
       <main className="flex-1">
-        {/* About section — matches homepage style */}
+        {/* About section */}
         <section className="py-14 sm:py-20 px-6" style={{ backgroundColor: '#F5EFE0' }}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center">
             <div
@@ -117,7 +106,7 @@ export default async function AboutPage() {
           </section>
         )}
 
-        <HaveAVisionSection />
+        <HaveAVisionToggle phone={c.footer_phone} email={c.footer_email} />
       </main>
 
       <PublicFooter />
