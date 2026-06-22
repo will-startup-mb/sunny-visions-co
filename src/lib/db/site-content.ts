@@ -19,8 +19,8 @@ export const SITE_CONTENT_DEFAULTS: Record<string, string> = {
   about_bio: 'Claire McCaffrey is a Myrtle Beach-based content creator and digital marketing strategist with 3+ years of experience in social media management, graphic design, video production, and photography. She founded Sunny Visions Co. to help local businesses and brands build a consistent, compelling presence online.',
   about_experience_heading: 'Experience',
   about_experience_body: 'From managing full social media calendars to producing polished video content and designing brand identities, Claire brings a full-spectrum creative skill set to every client engagement.',
-  about_instagram_url: 'https://www.instagram.com/',
-  about_linkedin_url: 'https://www.linkedin.com/in/',
+  about_instagram_url: 'https://www.instagram.com/mcclairree',
+  about_linkedin_url: 'https://www.linkedin.com/in/claire-mccaffrey-branding/',
 
   // ── Services Page ─────────────────────────────────────────────────────────
   services_headline: 'What I Do',
@@ -45,8 +45,8 @@ export const SITE_CONTENT_DEFAULTS: Record<string, string> = {
   footer_copyright: '© 2026 Sunny Visions Co.',
   footer_email: 'cemccaffrey5@gmail.com',
   footer_phone: '(843) 655-5360',
-  footer_instagram_url: 'https://www.instagram.com/',
-  footer_linkedin_url: 'https://www.linkedin.com/in/',
+  footer_instagram_url: 'https://www.instagram.com/mcclairree',
+  footer_linkedin_url: 'https://www.linkedin.com/in/claire-mccaffrey-branding/',
 };
 
 export const getSiteContent = cache(async (): Promise<Record<string, string>> => {
