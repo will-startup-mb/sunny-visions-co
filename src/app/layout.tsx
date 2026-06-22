@@ -7,7 +7,7 @@ const DESCRIPTION = 'One stop shop for content, design & branding. Social media,
 export const metadata: Metadata = {
   title: {
     template: '%s | Sunny Visions Co.',
-    default: 'Sunny Visions Co. — Content, Design & Branding',
+    default: 'Sunny Visions Co. — One Stop Shop for Content, Design & Branding',
   },
   description: DESCRIPTION,
   metadataBase: new URL(SITE_URL),
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     siteName: 'Sunny Visions Co.',
-    title: 'Sunny Visions Co. — Content, Design & Branding',
+    title: 'Sunny Visions Co. — One Stop Shop for Content, Design & Branding',
     description: DESCRIPTION,
     type: 'website',
     url: SITE_URL,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sunny Visions Co. — Content, Design & Branding',
+    title: 'Sunny Visions Co. — One Stop Shop for Content, Design & Branding',
     description: DESCRIPTION,
   },
 };

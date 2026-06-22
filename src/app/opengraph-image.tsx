@@ -1,33 +1,57 @@
 import { ImageResponse } from 'next/og';
-import { readFile } from 'fs/promises';
-import path from 'path';
 
-export const alt = 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem';
+export const runtime = 'edge';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default async function Image() {
-  const logoBuffer = await readFile(path.join(process.cwd(), 'public/logo.png'));
-  const logoSrc = `data:image/png;base64,${logoBuffer.toString('base64')}`;
+const BASE_URL = 'https://sunny-visions-co.vercel.app';
 
+export default function OGImage() {
   return new ImageResponse(
     (
       <div
         style={{
-          backgroundColor: '#F8F9FA',
-          width: '100%',
-          height: '100%',
+          width: '1200px',
+          height: '630px',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          flexDirection: 'column',
         }}
       >
-        <img
-          src={logoSrc}
-          width={300}
-          height={300}
-          style={{ objectFit: 'contain' }}
+        {/* Logo — bg-image crops into the center strip of the 2000×2000 canvas */}
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            backgroundColor: '#F5EFE0',
+            backgroundImage: `url(${BASE_URL}/logo.png)`,
+            backgroundSize: '1100px 1100px',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+          }}
         />
+        {/* Branded tagline strip */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#E8521A',
+            padding: '22px 48px',
+          }}
+        >
+          <span
+            style={{
+              color: '#F2BC2B',
+              fontSize: '26px',
+              fontWeight: 700,
+              letterSpacing: '3px',
+              textTransform: 'uppercase',
+              fontFamily: 'sans-serif',
+            }}
+          >
+            One Stop Shop for Content, Design &amp; Branding
+          </span>
+        </div>
       </div>
     ),
     { ...size },
