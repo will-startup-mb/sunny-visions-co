@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PublicFooter } from '@/components/PublicFooter';
 import { PublicNav } from '@/components/PublicNav';
+import { HaveAVisionSection } from '@/components/HaveAVisionSection';
 import { getSiteContent } from '@/lib/db/site-content';
 
 export const dynamic = 'force-dynamic';
@@ -116,22 +117,7 @@ export default async function AboutPage() {
           </section>
         )}
 
-        {/* CTA */}
-        <section className="py-10 sm:py-12 px-6 text-center" style={{ backgroundColor: '#E8521A' }}>
-          <h2
-            className="uppercase leading-none mb-6"
-            style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
-          >
-            HAVE A VISION?
-          </h2>
-          <Link
-            href="/#vision"
-            className="inline-block font-bold uppercase tracking-widest transition-opacity hover:opacity-90"
-            style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.75rem', letterSpacing: '0.15em', backgroundColor: '#3D2B1F', color: '#F2BC2B', padding: '0.9rem 2.5rem', borderRadius: '9999px' }}
-          >
-            LET&apos;S WORK TOGETHER →
-          </Link>
-        </section>
+        <HaveAVisionSection />
       </main>
 
       <PublicFooter />

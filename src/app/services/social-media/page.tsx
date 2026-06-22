@@ -3,7 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PublicNav } from '@/components/PublicNav';
 import { PublicFooter } from '@/components/PublicFooter';
+import { HaveAVisionSection } from '@/components/HaveAVisionSection';
 
+export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: 'Social Media Management' };
 
 const OTHER = [
@@ -55,13 +57,13 @@ export default function SocialMediaPage() {
                 <p className="font-bold text-lg">Starting at $500/month</p>
                 <p className="text-sm mt-1" style={{ opacity: 0.75 }}>Custom packages available based on platforms and posting frequency</p>
               </div>
-              <Link
-                href="/#vision"
+              <a
+                href="#vision"
                 className="inline-block font-bold uppercase tracking-widest transition-opacity hover:opacity-90 self-start"
                 style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.75rem', letterSpacing: '0.12em', backgroundColor: '#E8521A', color: 'white', padding: '0.8rem 2rem', borderRadius: '9999px' }}
               >
                 GET A QUOTE →
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -85,6 +87,7 @@ export default function SocialMediaPage() {
         </div>
       </main>
 
+      <HaveAVisionSection />
       <PublicFooter />
     </div>
   );
