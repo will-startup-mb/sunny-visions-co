@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PublicFooter } from '@/components/PublicFooter';
 import { PublicNav } from '@/components/PublicNav';
@@ -16,11 +17,11 @@ export default async function AboutPage() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F5EFE0' }}>
-      <header className="border-b" style={{ borderColor: '#e0d5c4', backgroundColor: '#F5EFE0' }}>
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <header style={{ backgroundColor: '#F5EFE0', borderBottom: '1px solid #e0d5c4' }}>
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex items-center justify-between py-4">
-            <Link href="/" className="text-2xl font-bold" style={{ fontFamily: "'Lobster Two', cursive", color: '#E8521A' }}>
-              Sunny Visions Co.
+            <Link href="/" className="flex items-center">
+              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} priority />
             </Link>
             <PublicNav />
           </div>
@@ -28,44 +29,108 @@ export default async function AboutPage() {
       </header>
 
       <main className="flex-1">
-        <section style={{ backgroundColor: '#D4C4A0' }} className="py-16 sm:py-20 text-center px-6">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4" style={{ fontFamily: "'Lobster Two', cursive", color: '#3D2B1F' }}>
-            {c.about_page_title}
-          </h1>
+        {/* About section — matches homepage style */}
+        <section className="py-14 sm:py-20 px-6" style={{ backgroundColor: '#F5EFE0' }}>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-center">
+            <div
+              className="rounded-2xl w-full"
+              style={{
+                aspectRatio: '3/4',
+                backgroundImage: 'url(/claire.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                backgroundColor: '#D4C4A0',
+              }}
+            />
+            <div>
+              <h1
+                className="uppercase leading-none mb-5"
+                style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#E8521A', letterSpacing: '0.04em' }}
+              >
+                ABOUT
+              </h1>
+              <p
+                className="leading-relaxed mb-6"
+                style={{ fontFamily: "'Livvic', sans-serif", fontSize: '1rem', color: '#3D2B1F', lineHeight: 1.85 }}
+              >
+                {c.about_snippet_body ?? "Hi! I'm Claire McCaffrey — a Myrtle Beach-based creative specializing in content creation, graphic design, and branding. I help businesses and individuals bring their vision to life through bold visuals and strategic storytelling."}
+              </p>
+              <ul className="flex flex-col gap-2 mb-8">
+                {[
+                  'Myrtle Beach native & coastal creative',
+                  '5+ years in social media & branding',
+                  'Loves golden hour shoots & bold typography',
+                  'Obsessed with making YOUR brand unforgettable',
+                ].map((fact) => (
+                  <li key={fact} style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.9rem', color: '#3D2B1F', paddingLeft: '1rem', borderLeft: '2px solid #E8521A' }}>
+                    {fact}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex gap-4 flex-wrap">
+                {c.about_instagram_url && (
+                  <a
+                    href={c.about_instagram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block font-bold uppercase transition-opacity hover:opacity-90"
+                    style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.75rem', letterSpacing: '0.12em', backgroundColor: '#3D2B1F', color: '#F2BC2B', padding: '0.75rem 2rem', borderRadius: '9999px' }}
+                  >
+                    INSTAGRAM →
+                  </a>
+                )}
+                {c.about_linkedin_url && (
+                  <a
+                    href={c.about_linkedin_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block font-bold uppercase transition-opacity hover:opacity-90"
+                    style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.75rem', letterSpacing: '0.12em', backgroundColor: 'transparent', color: '#3D2B1F', padding: '0.75rem 2rem', borderRadius: '9999px', border: '1.5px solid #3D2B1F' }}
+                  >
+                    LINKEDIN →
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6 sm:px-8 py-16">
-          <div className="card p-8 sm:p-10 space-y-8">
-            <div className="border-l-4 pl-6" style={{ borderColor: '#E8521A' }}>
-              <p className="text-base leading-relaxed" style={{ color: '#3D2B1F' }}>{c.about_bio}</p>
-            </div>
-
-            <div>
-              <h2 className="text-lg font-bold mb-3" style={{ color: '#3D2B1F' }}>
-                {c.about_experience_heading}
-              </h2>
-              <p className="text-base leading-relaxed text-gray-700">{c.about_experience_body}</p>
-            </div>
-
-            <div className="flex gap-4 pt-2">
-              {c.about_instagram_url && (
-                <a href={c.about_instagram_url} target="_blank" rel="noopener noreferrer" className="btn-secondary text-sm">
-                  Instagram
-                </a>
+        {/* Experience section */}
+        {(c.about_experience_heading || c.about_experience_body) && (
+          <section className="py-10 sm:py-12 px-6" style={{ backgroundColor: '#D4C4A0' }}>
+            <div className="max-w-5xl mx-auto">
+              {c.about_experience_heading && (
+                <h2
+                  className="uppercase leading-none mb-5"
+                  style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#3D2B1F', letterSpacing: '0.04em' }}
+                >
+                  {c.about_experience_heading}
+                </h2>
               )}
-              {c.about_linkedin_url && (
-                <a href={c.about_linkedin_url} target="_blank" rel="noopener noreferrer" className="btn-ghost text-sm">
-                  LinkedIn
-                </a>
+              {c.about_experience_body && (
+                <p style={{ fontFamily: "'Livvic', sans-serif", fontSize: '1rem', color: '#3D2B1F', lineHeight: 1.85, maxWidth: '65ch' }}>
+                  {c.about_experience_body}
+                </p>
               )}
             </div>
-          </div>
+          </section>
+        )}
 
-          <div className="mt-10 text-center">
-            <Link href="/contact" className="btn-primary inline-flex text-base px-8 py-3.5">
-              Let&apos;s Work Together →
-            </Link>
-          </div>
+        {/* CTA */}
+        <section className="py-10 sm:py-12 px-6 text-center" style={{ backgroundColor: '#E8521A' }}>
+          <h2
+            className="uppercase leading-none mb-6"
+            style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
+          >
+            HAVE A VISION?
+          </h2>
+          <Link
+            href="/#vision"
+            className="inline-block font-bold uppercase tracking-widest transition-opacity hover:opacity-90"
+            style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.75rem', letterSpacing: '0.15em', backgroundColor: '#3D2B1F', color: '#F2BC2B', padding: '0.9rem 2.5rem', borderRadius: '9999px' }}
+          >
+            LET&apos;S WORK TOGETHER →
+          </Link>
         </section>
       </main>
 

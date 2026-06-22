@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
-  { href: '/', label: 'HOME' },
   { href: '/services/social-media', label: 'SOCIAL MEDIA' },
   { href: '/services/video-content', label: 'VIDEO CONTENT' },
   { href: '/services/graphic-design', label: 'GRAPHIC DESIGN' },
