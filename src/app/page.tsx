@@ -40,7 +40,7 @@ export default async function HomePage() {
       <section
         className="relative flex flex-col items-center justify-center text-center"
         style={{
-          minHeight: '45vh',
+          minHeight: '52vh',
           backgroundImage: 'url(/hero.jpg), linear-gradient(160deg, #5A7D96 0%, #8AA5AA 40%, #C8A070 70%, #A87850 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -50,10 +50,10 @@ export default async function HomePage() {
         <div className="absolute inset-0" style={{ background: 'rgba(30,18,10,0.42)', pointerEvents: 'none' }} />
         <div className="relative z-10 px-6 sm:px-12 max-w-4xl mx-auto">
           <h1
-            className="leading-tight uppercase mb-10"
+            className="leading-tight uppercase mb-6"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+              fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
@@ -83,20 +83,20 @@ export default async function HomePage() {
       <div className="text-center py-3" style={{ backgroundColor: '#E8521A' }}>
         <span
           className="uppercase"
-          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 6vw, 3.5rem)', color: '#F2BC2B', letterSpacing: '0.12em' }}
+          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: '#F2BC2B', letterSpacing: '0.15em' }}
         >
           EXPLORE
         </span>
       </div>
 
       {/* SERVICE CARDS */}
-      <section className="py-14 px-6" style={{ backgroundColor: '#D4C4A0' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <section className="py-8 px-6" style={{ backgroundColor: '#D4C4A0' }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
           {EXPLORE_CARDS.map((card) => (
             <Link
               key={card.title}
               href={card.href}
-              className="flex flex-col items-center gap-5 py-10 px-6 rounded-2xl transition-transform hover:-translate-y-1"
+              className="flex flex-col items-center gap-4 py-7 px-6 rounded-2xl transition-transform hover:-translate-y-1"
               style={{ backgroundColor: '#F5EFE0', border: '2px solid #c0aa88', textDecoration: 'none' }}
             >
               <div
@@ -117,8 +117,8 @@ export default async function HomePage() {
       </section>
 
       {/* ABOUT — add /public/claire.jpg for Claire's photo */}
-      <section className="py-16 sm:py-20 px-6" style={{ backgroundColor: '#F5EFE0' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <section className="py-10 sm:py-12 px-6" style={{ backgroundColor: '#F5EFE0' }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div
             className="rounded-2xl w-full"
             style={{
@@ -132,7 +132,7 @@ export default async function HomePage() {
           <div>
             <h2
               className="uppercase leading-none mb-5"
-              style={{ fontFamily: 'var(--display)', fontSize: 'clamp(3rem, 8vw, 5rem)', color: '#E8521A', letterSpacing: '0.04em' }}
+              style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#E8521A', letterSpacing: '0.04em' }}
             >
               ABOUT
             </h2>
@@ -166,12 +166,12 @@ export default async function HomePage() {
       </section>
 
       {/* HAVE A VISION? */}
-      <section id="vision" className="py-16 sm:py-20 px-6" style={{ backgroundColor: '#E8521A' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+      <section id="vision" className="py-10 sm:py-12 px-6" style={{ backgroundColor: '#E8521A' }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
           <div>
             <h2
               className="uppercase leading-none mb-6"
-              style={{ fontFamily: 'var(--display)', fontSize: 'clamp(3rem, 9vw, 6rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
+              style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
             >
               HAVE A<br />VISION?
             </h2>
