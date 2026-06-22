@@ -43,7 +43,7 @@ export default async function HomePage() {
             className="leading-tight uppercase mb-6"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(2rem, 4vw, 2.8rem)',
+              fontSize: 'clamp(1.75rem, 3.2vw, 2.4rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
