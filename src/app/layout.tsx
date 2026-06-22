@@ -1,16 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
-const SITE_URL = process.env.NEXTAUTH_URL || 'https://startupmb.vercel.app';
-const DESCRIPTION = 'Discover and explore startups, founders, and companies building in the Myrtle Beach, SC ecosystem.';
+const SITE_URL = process.env.NEXTAUTH_URL || 'https://sunny-visions-co.vercel.app';
+const DESCRIPTION = 'One stop shop for content, design & branding. Social media, graphic design, video production, and photography by Claire McCaffrey.';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Startup MB',
-    default: 'Startup MB — Myrtle Beach Startup Ecosystem',
+    template: '%s | Sunny Visions Co.',
+    default: 'Sunny Visions Co. — Content, Design & Branding',
   },
   description: DESCRIPTION,
   metadataBase: new URL(SITE_URL),
@@ -22,8 +19,8 @@ export const metadata: Metadata = {
     apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
   },
   openGraph: {
-    siteName: 'Startup MB',
-    title: 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem',
+    siteName: 'Sunny Visions Co.',
+    title: 'Sunny Visions Co. — Content, Design & Branding',
     description: DESCRIPTION,
     type: 'website',
     url: SITE_URL,
@@ -31,18 +28,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem',
+    title: 'Sunny Visions Co. — Content, Design & Branding',
     description: DESCRIPTION,
-  },
-  verification: {
-    google: 'FgmEhmT8MbIfDVBRUZwRau4g5Qydr6PwvXh7KnjlGsc',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} min-h-full`}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

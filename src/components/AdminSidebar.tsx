@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { applyNavOrder } from '@/lib/nav-items';
@@ -18,13 +17,15 @@ export function AdminSidebar({ onClose, navOrder }: Props) {
   return (
     <aside
       className="w-56 flex-shrink-0 h-svh flex flex-col"
-      style={{ backgroundColor: '#1B3A52' }}
+      style={{ backgroundColor: '#3D2B1F' }}
     >
       {/* Logo */}
       <div className="p-5 border-b border-white/10 flex items-center justify-between">
         <Link href="/" className="block" onClick={onClose}>
-          <Image src="/logo-white.png" alt="Startup MB" height={64} width={64} className="object-contain" />
-          <div className="text-xs mt-1.5" style={{ color: '#3A9E9E' }}>Admin Dashboard</div>
+          <div className="text-white font-bold text-lg" style={{ fontFamily: "'Lobster Two', cursive" }}>
+            Sunny Visions Co.
+          </div>
+          <div className="text-xs mt-1" style={{ color: '#5B9FA3' }}>Admin Dashboard</div>
         </Link>
         <button
           onClick={onClose}
@@ -52,7 +53,7 @@ export function AdminSidebar({ onClose, navOrder }: Props) {
                   ? 'text-white'
                   : 'text-white/60 hover:text-white hover:bg-white/10'
               }`}
-              style={active ? { backgroundColor: '#F26522' } : {}}
+              style={active ? { backgroundColor: '#E8521A' } : {}}
             >
               {item.label}
             </Link>
@@ -72,7 +73,7 @@ export function AdminSidebar({ onClose, navOrder }: Props) {
           View Public Site
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: '/mb-hub/login' })}
+          onClick={() => signOut({ callbackUrl: '/sv-hub/login' })}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-white/60 hover:text-white hover:bg-white/10 transition-colors text-left"
         >
           Sign Out

@@ -1,4 +1,4 @@
 User-agent: *
+Disallow: /sv-hub
 Disallow: /admin
-Disallow: /mb-hub
 Allow: /

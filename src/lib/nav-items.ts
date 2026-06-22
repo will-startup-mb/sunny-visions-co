@@ -1,15 +1,12 @@
 export const ALL_NAV_ITEMS = [
-  { href: '/mb-hub/batch-research', label: 'Batch Research' },
-  { href: '/mb-hub/blog', label: 'Blog' },
-  { href: '/mb-hub/companies', label: 'Companies' },
-  { href: '/mb-hub/cost-dashboard', label: 'Cost Dashboard' },
-  { href: '/mb-hub/industries', label: 'Industries' },
-  { href: '/mb-hub/reports', label: 'Reports' },
-  { href: '/mb-hub/research-history', label: 'Research History' },
-  { href: '/mb-hub/security', label: 'Security' },
-  { href: '/mb-hub/site-content', label: 'Site Content' },
-  { href: '/mb-hub/stats', label: 'Statistics' },
-  { href: '/mb-hub/suggestions', label: 'Suggestions' },
+  { href: '/sv-hub/clients', label: 'Clients' },
+  { href: '/sv-hub/cost-tracker', label: 'Cost Tracker' },
+  { href: '/sv-hub/inquiries', label: 'Inquiries' },
+  { href: '/sv-hub/services', label: 'Services' },
+  { href: '/sv-hub/reports', label: 'Reports' },
+  { href: '/sv-hub/stats', label: 'Stats' },
+  { href: '/sv-hub/site-content', label: 'Site Content' },
+  { href: '/sv-hub/security', label: 'Security' },
 ];
 
 export const DEFAULT_NAV_ORDER = ALL_NAV_ITEMS.map((i) => i.href);

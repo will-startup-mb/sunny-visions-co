@@ -1,40 +1,13 @@
 import { MetadataRoute } from 'next';
-import { eq } from 'drizzle-orm';
-import { db } from '@/lib/db';
-import { companies } from '@/lib/db/schema';
 
-export const dynamic = 'force-dynamic';
+const BASE_URL = process.env.NEXTAUTH_URL ?? 'https://sunny-visions-co.vercel.app';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://startupmb.com';
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const published = await db
-    .select()
-    .from(companies)
-    .where(eq(companies.is_published, true));
-
-  const companyEntries: MetadataRoute.Sitemap = published
-    .filter((c) => c.slug)
-    .map((c) => ({
-      url: `${BASE_URL}/${c.slug}`,
-      lastModified: c.updated_at,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    }));
-
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${BASE_URL}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    ...companyEntries,
+    { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
+    { url: `${BASE_URL}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/work`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
   ];
 }

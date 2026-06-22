@@ -1,161 +1,123 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
-import { db } from '@/lib/db';
-import { companies } from '@/lib/db/schema';
-import { eq, ilike, or, and, asc, desc, sql } from 'drizzle-orm';
-import { CompanyCard } from '@/components/CompanyCard';
-import { SuggestCompanyForm } from '@/components/SuggestCompanyForm';
-import { PublicFooter } from '@/components/PublicFooter';
-import { SortSelect } from '@/components/SortSelect';
-import { INDUSTRIES, STAGES, FUNDING_OPTIONS } from '@/lib/constants';
 import { PublicNav } from '@/components/PublicNav';
+import { PublicFooter } from '@/components/PublicFooter';
 import { getSiteContent } from '@/lib/db/site-content';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: { absolute: 'Startup MB — Mapping the Myrtle Beach Startup Ecosystem' },
-  description: 'Discover and explore startups, founders, and companies building in the Myrtle Beach, SC ecosystem.',
+  title: { absolute: 'Sunny Visions Co. — Content, Design & Branding' },
+  description: 'One stop shop for content, design & branding. Social media, graphic design, video production, and photography by Claire McCaffrey.',
 };
 
-interface SearchParams {
-  search?: string;
-  industry?: string;
-  stage?: string;
-  funding?: string;
-  sort?: string;
-}
+const EXPLORE_CARDS = [
+  {
+    title: 'Video Content',
+    description: 'Short-form social videos, event coverage, and brand storytelling that keeps your audience watching.',
+    href: '/services',
+    icon: '🎥',
+  },
+  {
+    title: 'Graphic Design',
+    description: 'Social media packs, wedding suites, and full business branding that makes your brand unforgettable.',
+    href: '/services',
+    icon: '✏️',
+  },
+  {
+    title: 'Photography',
+    description: 'Event, brand, and product photography that captures the moment and elevates your presence.',
+    href: '/services',
+    icon: '📷',
+  },
+];
 
-async function getCompanies(params: SearchParams) {
-  const conditions: ReturnType<typeof eq>[] = [eq(companies.is_published, true)];
-
-  if (params.search) {
-    conditions.push(
-      or(
-        ilike(companies.company_name, `%${params.search}%`),
-        ilike(companies.company_description, `%${params.search}%`),
-        ilike(companies.founder_names, `%${params.search}%`)
-      ) as ReturnType<typeof eq>
-    );
-  }
-  if (params.industry) conditions.push(eq(companies.primary_industry, params.industry) as ReturnType<typeof eq>);
-  if (params.stage) conditions.push(eq(companies.stage, params.stage) as ReturnType<typeof eq>);
-  if (params.funding) conditions.push(eq(companies.funding_raised, params.funding) as ReturnType<typeof eq>);
-
-  const orderBy = params.sort === 'za'
-    ? desc(sql`LOWER(${companies.company_name})`)
-    : params.sort === 'newest'
-    ? desc(companies.created_at)
-    : asc(sql`LOWER(${companies.company_name})`);
-
-  return db.select().from(companies).where(and(...conditions)).orderBy(orderBy);
-}
-
-export default async function PublicDirectory({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const params = await searchParams;
-  const [results, content] = await Promise.all([
-    getCompanies(params),
-    getSiteContent(),
-  ]);
-  const hasFilters = params.search || params.industry || params.stage || params.funding;
+export default async function HomePage() {
+  const c = await getSiteContent();
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F8F9FA' }}>
-      {/* Hero */}
-      <section style={{ backgroundColor: '#F8F9FA' }} className="pb-14">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex items-center justify-between pt-4 pb-2">
-            <Link href="/">
-              <Image src="/logo.png" alt="Startup MB" height={80} width={80} className="object-contain" />
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#F5EFE0' }}>
+      {/* Header */}
+      <header style={{ backgroundColor: '#F5EFE0', borderBottom: '1px solid #e0d5c4' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="flex items-center justify-between py-4">
+            <Link href="/" className="text-2xl font-bold" style={{ fontFamily: "'Lobster Two', cursive", color: '#E8521A' }}>
+              Sunny Visions Co.
             </Link>
             <PublicNav />
           </div>
-          <div className="max-w-4xl mx-auto text-center pt-6">
-            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4" style={{ color: '#1B3A52' }}>
-              Mapping the Myrtle Beach<br /><span style={{ color: '#3A9E9E' }}>Startup Ecosystem</span>
-            </h1>
-            <p className="mb-8 text-base sm:text-lg mx-auto leading-relaxed" style={{ color: '#4B5563' }}>
-              {content.hero_subheadline}
-            </p>
-            <form method="GET" className="flex gap-2 max-w-xl mx-auto">
-              <input
-                name="search"
-                defaultValue={params.search}
-                placeholder={content.home_search_placeholder}
-                className="flex-1 rounded-lg px-4 sm:px-5 py-3 text-sm"
-                style={{ backgroundColor: '#FFFFFF', border: '1.5px solid #dde8f0', color: '#1B3A52' }}
-              />
-              {params.industry && <input type="hidden" name="industry" value={params.industry} />}
-              {params.stage && <input type="hidden" name="stage" value={params.stage} />}
-              {params.funding && <input type="hidden" name="funding" value={params.funding} />}
-              {params.sort && <input type="hidden" name="sort" value={params.sort} />}
-              <button type="submit" className="btn-primary">Search</button>
-            </form>
-            <SuggestCompanyForm />
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section style={{ backgroundColor: '#E8521A' }} className="py-20 sm:py-28">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center">
+          <h1
+            className="text-5xl sm:text-7xl font-bold mb-5 leading-none"
+            style={{ fontFamily: "'Lobster Two', cursive", color: '#F2BC2B' }}
+          >
+            {c.hero_headline}
+          </h1>
+          <p className="text-lg sm:text-xl mb-10 font-semibold" style={{ color: 'rgba(255,255,255,0.9)' }}>
+            {c.hero_tagline}
+          </p>
+          <Link href={c.hero_cta_href || '/services'} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-bold text-base transition-opacity hover:opacity-90"
+            style={{ backgroundColor: '#F2BC2B', color: '#3D2B1F', fontFamily: "'Livvic', sans-serif" }}>
+            {c.hero_cta_label} →
+          </Link>
+        </div>
+      </section>
+
+      {/* Explore cards */}
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F5EFE0' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+          <h2 className="text-center text-sm font-bold uppercase tracking-widest mb-10" style={{ color: '#5B9FA3' }}>
+            What I Offer
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {EXPLORE_CARDS.map((card) => (
+              <Link key={card.title} href={card.href}
+                className="card p-7 hover:shadow-lg transition-shadow group flex flex-col gap-3">
+                <div className="text-3xl">{card.icon}</div>
+                <h3 className="text-base font-bold group-hover:underline" style={{ color: '#3D2B1F' }}>{card.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed flex-1">{card.description}</p>
+                <span className="text-sm font-semibold mt-1" style={{ color: '#E8521A' }}>Learn more →</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <div className="sticky top-0 z-10" style={{ backgroundColor: '#1B3A52' }}>
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <form method="GET" className="flex flex-wrap gap-3 sm:gap-4 py-4 items-center">
-            {params.search && <input type="hidden" name="search" value={params.search} />}
-            {params.sort && <input type="hidden" name="sort" value={params.sort} />}
-            <select name="industry" defaultValue={params.industry || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
-              <option value="">All Industries</option>
-              {INDUSTRIES.map((i) => <option key={i} value={i} style={{ backgroundColor: '#1B3A52' }}>{i}</option>)}
-            </select>
-            <select name="stage" defaultValue={params.stage || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
-              <option value="">All Stages</option>
-              {STAGES.map((s) => <option key={s} value={s} style={{ backgroundColor: '#1B3A52' }}>{s}</option>)}
-            </select>
-            <select name="funding" defaultValue={params.funding || ''} className="py-2 text-sm" style={{ width: 'auto', backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)', borderRadius: '0.375rem' }}>
-              <option value="">All Funding</option>
-              {FUNDING_OPTIONS.map((f) => <option key={f} value={f} style={{ backgroundColor: '#1B3A52' }}>{f}</option>)}
-            </select>
-            <button type="submit" className="py-2 px-4 text-sm font-medium rounded-md transition-colors" style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.25)' }}>
-              Filter
-            </button>
-            {hasFilters && (
-              <Link href="/" className="text-sm underline font-medium" style={{ color: '#F26522' }}>Clear all</Link>
-            )}
-            <div className="ml-auto flex items-center gap-3">
-              <SortSelect
-                currentSort={params.sort || 'az'}
-                otherParams={{ search: params.search, industry: params.industry, stage: params.stage, funding: params.funding }}
-                dark
-              />
-              <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                {results.length} {results.length === 1 ? 'company' : 'companies'}
-              </span>
-            </div>
-          </form>
+      {/* About snippet */}
+      <section style={{ backgroundColor: '#D4C4A0' }} className="py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-5" style={{ fontFamily: "'Lobster Two', cursive", color: '#3D2B1F' }}>
+            {c.about_snippet_heading}
+          </h2>
+          <p className="text-base leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: '#3D2B1F' }}>
+            {c.about_snippet_body}
+          </p>
+          <Link href="/about" className="btn-secondary inline-flex">
+            {c.about_snippet_cta} →
+          </Link>
         </div>
-      </div>
+      </section>
 
-      {/* Grid */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-6 sm:px-8 lg:px-12 py-10">
-        {results.length === 0 ? (
-          <div className="text-center py-16 text-gray-500">
-            <p className="text-5xl mb-6">🔍</p>
-            <p className="text-xl font-medium">{content.home_empty_heading}</p>
-            <p className="mt-2">{content.home_empty_body}</p>
-            <Link href="/" className="btn-primary mt-8 inline-flex">Clear filters</Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {results.map((company) => (
-              <CompanyCard key={company.id} company={company} />
-            ))}
-          </div>
-        )}
-      </main>
+      {/* Contact CTA */}
+      <section style={{ backgroundColor: '#3D2B1F' }} className="py-16 sm:py-20">
+        <div className="max-w-2xl mx-auto px-6 sm:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Lobster Two', cursive", color: '#F2BC2B' }}>
+            Let&apos;s Make Your Vision Happen
+          </h2>
+          <p className="mb-8 text-base" style={{ color: 'rgba(255,255,255,0.7)' }}>
+            Ready to get started? Reach out and let&apos;s talk about your project.
+          </p>
+          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-bold text-base transition-opacity hover:opacity-90"
+            style={{ backgroundColor: '#E8521A', color: '#fff', fontFamily: "'Livvic', sans-serif" }}>
+            Get in Touch →
+          </Link>
+        </div>
+      </section>
 
       <PublicFooter />
     </div>

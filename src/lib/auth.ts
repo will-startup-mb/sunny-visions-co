@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
             if (!result.valid) return null;
           }
 
-          return { id: '1', name: 'Will McCaffrey', email: adminEmail };
+          return { id: '1', name: 'Claire McCaffrey', email: adminEmail };
         } catch {
           return null;
         }
@@ -56,6 +56,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: { strategy: 'jwt' },
-  pages: { signIn: '/mb-hub/login' },
+  pages: { signIn: '/sv-hub/login' },
   secret: process.env.NEXTAUTH_SECRET,
 };
