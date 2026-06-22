@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PublicNav } from '@/components/PublicNav';
 import { PublicFooter } from '@/components/PublicFooter';
@@ -58,8 +59,8 @@ export default async function ServicesPage() {
       <header className="border-b" style={{ borderColor: '#e0d5c4', backgroundColor: '#F5EFE0' }}>
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between py-4">
-            <Link href="/" className="uppercase tracking-widest" style={{ fontFamily: 'var(--display)', color: '#E8521A', fontSize: '1.2rem' }}>
-              SUNNY VISIONS CO.
+            <Link href="/" className="flex items-center">
+              <Image src="/logo.png" alt="Sunny Visions Co." height={36} width={360} style={{ height: '2.25rem', width: 'auto' }} />
             </Link>
             <PublicNav />
           </div>

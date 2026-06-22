@@ -8,9 +8,9 @@ export async function PublicFooter() {
     <footer style={{ backgroundColor: '#3D2B1F' }} className="mt-auto py-10">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="uppercase tracking-widest" style={{ fontFamily: 'var(--display)', fontSize: '1.5rem', color: '#F2BC2B' }}>
+          <Link href="/" className="uppercase tracking-widest" style={{ fontFamily: 'var(--display)', fontSize: '1.4rem', color: '#F2BC2B', letterSpacing: '0.06em' }}>
             SUNNY VISIONS CO.
-          </div>
+          </Link>
           {c.footer_tagline && (
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{c.footer_tagline}</p>
           )}
