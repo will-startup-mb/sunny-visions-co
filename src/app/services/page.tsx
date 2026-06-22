@@ -15,15 +15,21 @@ export const metadata: Metadata = {
 const SERVICES = [
   {
     category: 'Social Media Management',
-    icon: '📱',
     color: '#E8521A',
     items: [
       { name: 'Monthly Retainer', price: '$500 – $1,200/mo', description: 'Full social media management including content planning, graphic creation, posting, and engagement.' },
     ],
   },
   {
+    category: 'Video Content',
+    color: '#F2BC2B',
+    items: [
+      { name: 'Short Form Video', price: '$300 – $700/video', description: 'Scroll-stopping content for Instagram Reels, TikTok, and YouTube Shorts.' },
+      { name: 'Event Coverage', price: '$800 – $2,500/event', description: 'Full event video production with highlight reel and edited footage delivery.' },
+    ],
+  },
+  {
     category: 'Graphic Design',
-    icon: '✏️',
     color: '#5B9FA3',
     items: [
       { name: 'Social Pack', price: '$300 – $600/project', description: 'Branded social media graphics for a full campaign or content period.' },
@@ -32,21 +38,11 @@ const SERVICES = [
     ],
   },
   {
-    category: 'Video Content',
-    icon: '🎥',
-    color: '#F2BC2B',
-    items: [
-      { name: 'Short Form Video', price: '$300 – $700/video', description: 'Scroll-stopping content for Instagram Reels, TikTok, and YouTube Shorts.' },
-      { name: 'Event Coverage', price: '$800 – $2,500/event', description: 'Full event video production with highlight reel and edited footage delivery.' },
-    ],
-  },
-  {
-    category: 'Photography',
-    icon: '📷',
+    category: 'Custom Merch',
     color: '#3D2B1F',
     items: [
-      { name: 'Event Photography', price: '$500 – $1,500/event', description: 'Professional event coverage with edited photo gallery delivery.' },
-      { name: 'Brand / Product', price: '$400 – $1,200/session', description: 'Studio or on-location brand and product photography for marketing use.' },
+      { name: 'Apparel & Accessories', price: '$200+/design', description: 'Custom branded clothing and accessories designed to represent your brand.' },
+      { name: 'Merch Line Design', price: '$500 – $1,500/project', description: 'Full custom merch line from concept through finished product.' },
     ],
   },
 ];
@@ -84,7 +80,6 @@ export default async function ServicesPage() {
             {SERVICES.map((cat) => (
               <div key={cat.category} className="card p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="text-2xl">{cat.icon}</span>
                   <h2 className="text-lg font-bold" style={{ color: cat.color, fontFamily: "'Livvic', sans-serif" }}>
                     {cat.category}
                   </h2>

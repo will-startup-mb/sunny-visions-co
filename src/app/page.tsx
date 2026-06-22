@@ -14,9 +14,10 @@ export const metadata: Metadata = {
 };
 
 const EXPLORE_CARDS = [
-  { title: 'VIDEO\nCONTENT', href: '/services/video-content', emoji: '🎬' },
-  { title: 'GRAPHIC\nDESIGN', href: '/services/graphic-design', emoji: '✏️' },
-  { title: 'PHOTOGRAPHY', href: '/services/photography', emoji: '📷' },
+  { title: 'SOCIAL MEDIA', href: '/services/social-media' },
+  { title: 'VIDEO CONTENT', href: '/services/video-content' },
+  { title: 'GRAPHIC DESIGN', href: '/services/graphic-design' },
+  { title: 'CUSTOM MERCH', href: '/services/custom-merch' },
 ];
 
 export default async function HomePage() {
@@ -83,7 +84,7 @@ export default async function HomePage() {
       <div className="text-center py-3" style={{ backgroundColor: '#E8521A' }}>
         <span
           className="uppercase"
-          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: '#F2BC2B', letterSpacing: '0.15em' }}
+          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#F2BC2B', letterSpacing: '0.15em' }}
         >
           EXPLORE
         </span>
@@ -91,23 +92,17 @@ export default async function HomePage() {
 
       {/* SERVICE CARDS */}
       <section className="py-8 px-6" style={{ backgroundColor: '#D4C4A0' }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-5">
           {EXPLORE_CARDS.map((card) => (
             <Link
               key={card.title}
               href={card.href}
-              className="flex flex-col items-center gap-4 py-7 px-6 rounded-2xl transition-transform hover:-translate-y-1"
+              className="flex flex-col items-center justify-center gap-3 py-7 px-4 rounded-2xl transition-transform hover:-translate-y-1"
               style={{ backgroundColor: '#F5EFE0', border: '2px solid #c0aa88', textDecoration: 'none' }}
             >
-              <div
-                className="flex items-center justify-center text-3xl rounded-full"
-                style={{ width: '5rem', height: '5rem', backgroundColor: '#E8521A', flexShrink: 0 }}
-              >
-                {card.emoji}
-              </div>
               <span
                 className="text-center uppercase"
-                style={{ fontFamily: 'var(--display)', fontSize: '1.1rem', color: '#3D2B1F', letterSpacing: '0.07em', whiteSpace: 'pre-line' }}
+                style={{ fontFamily: 'var(--display)', fontSize: '1rem', color: '#3D2B1F', letterSpacing: '0.07em' }}
               >
                 {card.title}
               </span>
@@ -149,8 +144,8 @@ export default async function HomePage() {
                 'Loves golden hour shoots & bold typography',
                 'Obsessed with making YOUR brand unforgettable',
               ].map((fact) => (
-                <li key={fact} className="flex items-center gap-2" style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.9rem', color: '#3D2B1F' }}>
-                  <span style={{ color: '#E8521A', fontWeight: 700 }}>✦</span> {fact}
+                <li key={fact} style={{ fontFamily: "'Livvic', sans-serif", fontSize: '0.9rem', color: '#3D2B1F', paddingLeft: '1rem', borderLeft: '2px solid #E8521A' }}>
+                  {fact}
                 </li>
               ))}
             </ul>
@@ -180,13 +175,13 @@ export default async function HomePage() {
             </p>
             <div className="flex flex-col gap-2">
               {c.footer_phone && (
-                <a href={`tel:${c.footer_phone}`} className="flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.9)', fontFamily: "'Livvic', sans-serif", fontSize: '1rem' }}>
-                  📞 {c.footer_phone}
+                <a href={`tel:${c.footer_phone}`} style={{ color: 'rgba(255,255,255,0.9)', fontFamily: "'Livvic', sans-serif", fontSize: '1rem' }}>
+                  {c.footer_phone}
                 </a>
               )}
               {c.footer_email && (
-                <a href={`mailto:${c.footer_email}`} className="flex items-center gap-2" style={{ color: 'rgba(255,255,255,0.9)', fontFamily: "'Livvic', sans-serif", fontSize: '1rem' }}>
-                  ✉️ {c.footer_email}
+                <a href={`mailto:${c.footer_email}`} style={{ color: 'rgba(255,255,255,0.9)', fontFamily: "'Livvic', sans-serif", fontSize: '1rem' }}>
+                  {c.footer_email}
                 </a>
               )}
             </div>

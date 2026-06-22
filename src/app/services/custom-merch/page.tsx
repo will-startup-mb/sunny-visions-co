@@ -4,15 +4,15 @@ import Link from 'next/link';
 import { PublicNav } from '@/components/PublicNav';
 import { PublicFooter } from '@/components/PublicFooter';
 
-export const metadata: Metadata = { title: 'Video Content' };
+export const metadata: Metadata = { title: 'Custom Merch' };
 
 const OTHER = [
   { label: 'SOCIAL MEDIA', href: '/services/social-media' },
+  { label: 'VIDEO CONTENT', href: '/services/video-content' },
   { label: 'GRAPHIC DESIGN', href: '/services/graphic-design' },
-  { label: 'CUSTOM MERCH', href: '/services/custom-merch' },
 ];
 
-export default function VideoContentPage() {
+export default function CustomMerchPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <header style={{ backgroundColor: '#F5EFE0', borderBottom: '1px solid #e0d5c4' }}>
@@ -30,17 +30,17 @@ export default function VideoContentPage() {
         <div className="max-w-5xl mx-auto">
           <h1
             className="uppercase leading-none mb-10"
-            style={{ fontFamily: 'var(--display)', fontSize: 'clamp(3.5rem, 12vw, 8rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
+            style={{ fontFamily: 'var(--display)', fontSize: 'clamp(3rem, 10vw, 7rem)', color: '#F2BC2B', letterSpacing: '0.04em' }}
           >
-            VIDEO<br />CONTENT
+            CUSTOM<br />MERCH
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <p className="leading-relaxed mb-6" style={{ color: '#F5EFE0', fontFamily: "'Livvic', sans-serif", fontSize: '1rem', lineHeight: 1.8 }}>
-                Scroll-stopping short-form video, event coverage, and brand storytelling that keeps your audience watching and coming back for more.
+                Custom branded merchandise that turns your audience into walking billboards. From concept to finished product — designed to stand out.
               </p>
               <ul className="flex flex-col gap-3">
-                {['Short-form Reels & TikToks', 'Event recap videos', 'Brand story videos', 'Product showcases', 'Behind-the-scenes content'].map((item) => (
+                {['Custom apparel & clothing', 'Branded accessories', 'Event & promotional items', 'Business swag packs', 'Full merch line design'].map((item) => (
                   <li key={item} style={{ color: '#F5EFE0', fontFamily: "'Livvic', sans-serif", fontSize: '0.95rem', paddingLeft: '1rem', borderLeft: '2px solid #F2BC2B' }}>
                     {item}
                   </li>
@@ -52,8 +52,8 @@ export default function VideoContentPage() {
                 PRICING
               </h3>
               <div style={{ color: '#F5EFE0', fontFamily: "'Livvic', sans-serif" }}>
-                <p className="font-bold text-lg">Starting at $300/video</p>
-                <p className="text-sm mt-1" style={{ opacity: 0.75 }}>Packages available for ongoing content creation</p>
+                <p className="font-bold text-lg">Starting at $200/design</p>
+                <p className="text-sm mt-1" style={{ opacity: 0.75 }}>Pricing varies by product type and quantity</p>
               </div>
               <Link
                 href="/#vision"

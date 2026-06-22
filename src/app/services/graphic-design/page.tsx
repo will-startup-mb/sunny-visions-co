@@ -7,8 +7,9 @@ import { PublicFooter } from '@/components/PublicFooter';
 export const metadata: Metadata = { title: 'Graphic Design' };
 
 const OTHER = [
-  { label: 'VIDEO CONTENT', href: '/services/video-content', emoji: '🎬' },
-  { label: 'PHOTOGRAPHY', href: '/services/photography', emoji: '📷' },
+  { label: 'SOCIAL MEDIA', href: '/services/social-media' },
+  { label: 'VIDEO CONTENT', href: '/services/video-content' },
+  { label: 'CUSTOM MERCH', href: '/services/custom-merch' },
 ];
 
 export default function GraphicDesignPage() {
@@ -40,8 +41,8 @@ export default function GraphicDesignPage() {
               </p>
               <ul className="flex flex-col gap-3">
                 {['Social media graphics & packs', 'Wedding suites & stationery', 'Business branding & logos', 'Flyers, posters & print', 'Brand identity packages'].map((item) => (
-                  <li key={item} className="flex items-center gap-2" style={{ color: '#F5EFE0', fontFamily: "'Livvic', sans-serif", fontSize: '0.95rem' }}>
-                    <span style={{ color: '#F2BC2B', fontWeight: 700 }}>✦</span> {item}
+                  <li key={item} style={{ color: '#F5EFE0', fontFamily: "'Livvic', sans-serif", fontSize: '0.95rem', paddingLeft: '1rem', borderLeft: '2px solid #F2BC2B' }}>
+                    {item}
                   </li>
                 ))}
               </ul>
@@ -73,10 +74,10 @@ export default function GraphicDesignPage() {
                 <Link
                   key={s.href}
                   href={s.href}
-                  className="flex items-center gap-3 font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
+                  className="font-bold uppercase tracking-wider transition-opacity hover:opacity-80"
                   style={{ fontFamily: 'var(--display)', fontSize: '0.85rem', color: '#F5EFE0', backgroundColor: 'rgba(255,255,255,0.12)', padding: '0.7rem 1.5rem', borderRadius: '9999px', letterSpacing: '0.06em' }}
                 >
-                  {s.emoji} {s.label}
+                  {s.label}
                 </Link>
               ))}
             </div>

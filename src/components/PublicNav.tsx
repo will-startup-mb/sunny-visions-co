@@ -5,9 +5,11 @@ import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
   { href: '/', label: 'HOME' },
+  { href: '/services/social-media', label: 'SOCIAL MEDIA' },
   { href: '/services/video-content', label: 'VIDEO CONTENT' },
   { href: '/services/graphic-design', label: 'GRAPHIC DESIGN' },
-  { href: '/services/photography', label: 'PHOTOGRAPHY' },
+  { href: '/services/custom-merch', label: 'CUSTOM MERCH' },
+  { href: '/about', label: 'ABOUT' },
 ];
 
 export function PublicNav() {

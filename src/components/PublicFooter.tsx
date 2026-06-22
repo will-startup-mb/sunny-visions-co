@@ -15,10 +15,11 @@ export async function PublicFooter() {
             <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>{c.footer_tagline}</p>
           )}
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            <Link href="/services" className="hover:text-white transition-colors">Services</Link>
-            <Link href="/work" className="hover:text-white transition-colors">Work</Link>
+            <Link href="/services/social-media" className="hover:text-white transition-colors">Social Media</Link>
+            <Link href="/services/video-content" className="hover:text-white transition-colors">Video Content</Link>
+            <Link href="/services/graphic-design" className="hover:text-white transition-colors">Graphic Design</Link>
+            <Link href="/services/custom-merch" className="hover:text-white transition-colors">Custom Merch</Link>
             <Link href="/about" className="hover:text-white transition-colors">About</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
             {c.footer_email && (
