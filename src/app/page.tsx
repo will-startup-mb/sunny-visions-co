@@ -54,7 +54,7 @@ export default async function HomePage() {
             className="leading-tight uppercase mb-6"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+              fontSize: 'clamp(2.75rem, 6vw, 4rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
@@ -67,8 +67,8 @@ export default async function HomePage() {
             className="inline-block font-bold uppercase tracking-widest transition-opacity hover:opacity-90"
             style={{
               fontFamily: "'Livvic', sans-serif",
-              fontSize: '0.75rem',
-              letterSpacing: '0.15em',
+              fontSize: '1.1rem',
+              letterSpacing: '0.1em',
               backgroundColor: '#E8521A',
               color: 'white',
               padding: '0.9rem 2.5rem',
