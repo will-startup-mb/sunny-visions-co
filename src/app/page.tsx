@@ -40,7 +40,7 @@ export default async function HomePage() {
       <section
         className="relative flex flex-col items-center justify-center text-center"
         style={{
-          minHeight: '80vh',
+          minHeight: '45vh',
           backgroundImage: 'url(/hero.jpg), linear-gradient(160deg, #5A7D96 0%, #8AA5AA 40%, #C8A070 70%, #A87850 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -53,7 +53,7 @@ export default async function HomePage() {
             className="leading-tight uppercase mb-10"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(2.75rem, 8vw, 6rem)',
+              fontSize: 'clamp(1.4rem, 3vw, 2rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
