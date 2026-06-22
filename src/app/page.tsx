@@ -54,7 +54,7 @@ export default async function HomePage() {
             className="leading-tight uppercase mb-6"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(2.75rem, 6vw, 4rem)',
+              fontSize: 'clamp(2rem, 4vw, 2.8rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
@@ -84,7 +84,7 @@ export default async function HomePage() {
       <div className="text-center py-3" style={{ backgroundColor: '#E8521A' }}>
         <span
           className="uppercase"
-          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F2BC2B', letterSpacing: '0.06em' }}
+          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.75rem, 3vw, 2.25rem)', color: '#F2BC2B', letterSpacing: '0.06em' }}
         >
           EXPLORE
         </span>
@@ -98,7 +98,7 @@ export default async function HomePage() {
               key={card.title}
               href={card.href}
               className="flex flex-col items-center justify-center gap-3 py-7 px-4 rounded-2xl transition-all hover:-translate-y-1 hover:opacity-90"
-              style={{ backgroundColor: '#E8521A', border: 'none', textDecoration: 'none' }}
+              style={{ backgroundColor: '#3D2B1F', border: 'none', textDecoration: 'none' }}
             >
               <span
                 className="text-center uppercase"
