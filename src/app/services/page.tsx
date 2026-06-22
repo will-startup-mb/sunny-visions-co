@@ -60,7 +60,7 @@ export default async function ServicesPage() {
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between py-4">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Sunny Visions Co." height={36} width={360} style={{ height: '2.25rem', width: 'auto' }} />
+              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} />
             </Link>
             <PublicNav />
           </div>

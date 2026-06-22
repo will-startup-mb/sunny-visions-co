@@ -29,7 +29,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="flex items-center justify-between py-4">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Sunny Visions Co." height={36} width={360} style={{ height: '2.25rem', width: 'auto' }} priority />
+              <Image src="/logo.png" alt="Sunny Visions Co." height={2000} width={2000} style={{ height: '3.5rem', width: '16rem', objectFit: 'cover', objectPosition: 'center' }} priority />
             </Link>
             <PublicNav />
           </div>
@@ -48,24 +48,18 @@ export default async function HomePage() {
         }}
       >
         <div className="absolute inset-0" style={{ background: 'rgba(30,18,10,0.42)', pointerEvents: 'none' }} />
-        <div className="relative z-10 px-6 sm:px-12">
-          <p
-            className="font-bold uppercase mb-5"
-            style={{ color: '#F2BC2B', fontFamily: "'Livvic', sans-serif", fontSize: '0.7rem', letterSpacing: '0.28em' }}
-          >
-            ONE STOP SHOP FOR CONTENT, DESIGN, &amp; BRANDING
-          </p>
+        <div className="relative z-10 px-6 sm:px-12 max-w-4xl mx-auto">
           <h1
-            className="leading-none uppercase mb-10"
+            className="leading-tight uppercase mb-10"
             style={{
               fontFamily: 'var(--display)',
-              fontSize: 'clamp(4rem, 14vw, 11rem)',
+              fontSize: 'clamp(2.75rem, 8vw, 6rem)',
               color: '#F2BC2B',
               letterSpacing: '0.04em',
               textShadow: '0 4px 30px rgba(0,0,0,0.35)',
             }}
           >
-            SUNNY<br />VISIONS<br />CO.
+            ONE STOP SHOP FOR CONTENT, DESIGN, &amp; BRANDING
           </h1>
           <Link
             href="#vision"
