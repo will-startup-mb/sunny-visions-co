@@ -15,12 +15,22 @@ export default function OGImage() {
           height: '630px',
           display: 'flex',
           backgroundColor: '#F5EFE0',
-          backgroundImage: `url(${BASE_URL}/logo.png)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          overflow: 'hidden',
         }}
-      />
+      >
+        {/* Scale logo to 1200×1200, shift up 285px to show vertical center
+            Logo text lives at ~y:800–1200 in the 2000×2000 canvas.
+            At 0.6x scale → y:480–720. OG height=630, so marginTop=-(600-315)=-285. */}
+        <img
+          src={`${BASE_URL}/logo.png`}
+          style={{
+            width: '1200px',
+            height: '1200px',
+            marginTop: '-285px',
+            flexShrink: 0,
+          }}
+        />
+      </div>
     ),
     { ...size },
   );
