@@ -84,7 +84,7 @@ export default async function HomePage() {
       <div className="text-center py-3" style={{ backgroundColor: '#E8521A' }}>
         <span
           className="uppercase"
-          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#F2BC2B', letterSpacing: '0.15em' }}
+          style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#F2BC2B', letterSpacing: '0.06em' }}
         >
           EXPLORE
         </span>
@@ -97,12 +97,12 @@ export default async function HomePage() {
             <Link
               key={card.title}
               href={card.href}
-              className="flex flex-col items-center justify-center gap-3 py-7 px-4 rounded-2xl transition-transform hover:-translate-y-1"
-              style={{ backgroundColor: '#F5EFE0', border: '2px solid #c0aa88', textDecoration: 'none' }}
+              className="flex flex-col items-center justify-center gap-3 py-7 px-4 rounded-2xl transition-all hover:-translate-y-1 hover:opacity-90"
+              style={{ backgroundColor: '#E8521A', border: 'none', textDecoration: 'none' }}
             >
               <span
                 className="text-center uppercase"
-                style={{ fontFamily: 'var(--display)', fontSize: '1rem', color: '#3D2B1F', letterSpacing: '0.07em' }}
+                style={{ fontFamily: 'var(--display)', fontSize: '1rem', color: '#F2BC2B', letterSpacing: '0.07em' }}
               >
                 {card.title}
               </span>
