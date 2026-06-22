@@ -58,8 +58,8 @@ export default async function ServicesPage() {
       <header className="border-b" style={{ borderColor: '#e0d5c4', backgroundColor: '#F5EFE0' }}>
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between py-4">
-            <Link href="/" className="text-2xl font-bold" style={{ fontFamily: "'Lobster Two', cursive", color: '#E8521A' }}>
-              Sunny Visions Co.
+            <Link href="/" className="uppercase tracking-widest" style={{ fontFamily: 'var(--display)', color: '#E8521A', fontSize: '1.2rem' }}>
+              SUNNY VISIONS CO.
             </Link>
             <PublicNav />
           </div>
@@ -69,7 +69,7 @@ export default async function ServicesPage() {
       <main className="flex-1">
         {/* Hero */}
         <section className="py-16 sm:py-20 text-center px-6" style={{ backgroundColor: '#D4C4A0' }}>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4" style={{ fontFamily: "'Lobster Two', cursive", color: '#3D2B1F' }}>
+          <h1 className="uppercase mb-4" style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2.5rem, 8vw, 4rem)', color: '#3D2B1F', letterSpacing: '0.05em' }}>
             {c.services_headline}
           </h1>
           <p className="text-base sm:text-lg max-w-xl mx-auto" style={{ color: '#3D2B1F', opacity: 0.75 }}>
@@ -107,7 +107,7 @@ export default async function ServicesPage() {
         {/* CTA */}
         <section style={{ backgroundColor: '#E8521A' }} className="py-16 sm:py-20">
           <div className="max-w-2xl mx-auto px-6 sm:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Lobster Two', cursive", color: '#F2BC2B' }}>
+            <h2 className="uppercase mb-4" style={{ fontFamily: 'var(--display)', fontSize: 'clamp(2rem, 5vw, 2.5rem)', color: '#F2BC2B', letterSpacing: '0.06em' }}>
               {c.services_cta_heading}
             </h2>
             <p className="mb-8 text-base" style={{ color: 'rgba(255,255,255,0.9)' }}>{c.services_cta_body}</p>

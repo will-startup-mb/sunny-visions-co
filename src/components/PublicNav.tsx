@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
-  { href: '/services', label: 'Services' },
-  { href: '/work', label: 'Work' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/', label: 'HOME' },
+  { href: '/services/video-content', label: 'VIDEO CONTENT' },
+  { href: '/services/graphic-design', label: 'GRAPHIC DESIGN' },
+  { href: '/services/photography', label: 'PHOTOGRAPHY' },
 ];
 
 export function PublicNav() {
@@ -16,13 +16,13 @@ export function PublicNav() {
   return (
     <nav className="flex items-center gap-4 sm:gap-7">
       {NAV_LINKS.map(({ href, label }) => {
-        const active = pathname === href || pathname.startsWith(href + '/');
+        const active = href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
         return (
           <Link
             key={href}
             href={href}
-            className="text-sm sm:text-base font-semibold transition-colors"
-            style={{ color: active ? '#E8521A' : '#3D2B1F', fontFamily: "'Livvic', sans-serif" }}
+            className="text-xs sm:text-sm font-bold transition-colors uppercase tracking-widest"
+            style={{ color: active ? '#E8521A' : '#3D2B1F', fontFamily: "'Livvic', sans-serif", letterSpacing: '0.08em' }}
           >
             {label}
           </Link>

@@ -1,14 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Rammetto+One&family=Livvic:wght@400;600;700&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&family=Livvic:wght@400;600;700&family=Radley:ital@1&display=swap');
+
+/* Drop public/fonts/ITC-Zipper.woff2 to activate the real brand font */
+@font-face {
+  font-family: 'ITC Zipper';
+  src: url('/fonts/ITC-Zipper.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --orange: #E8521A;
   --goldenrod: #F2BC2B;
   --teal: #5B9FA3;
+  --olive: #6B6B48;
   --kraft: #D4C4A0;
   --cream: #F5EFE0;
   --brown: #3D2B1F;
   --white: #FFFFFF;
+  --display: 'ITC Zipper', 'Rammetto One', cursive;
 }
 
 body {
